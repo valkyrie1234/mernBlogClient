@@ -43,8 +43,8 @@ const Main = () => {
         dispatch(fetchLastFiveTags())
     }, [])
 
-
-
+    console.log('123')
+    console.log('123')
     return (
         <div>
             <MemoizedMyHeader />
