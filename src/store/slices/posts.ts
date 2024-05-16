@@ -123,7 +123,7 @@ const postsSlice = createSlice({
                 state.posts.isSearchedPostsLoading = true
             }),
             builder.addCase(fetchSearchedPosts.fulfilled, (state: RootState["POSTS"], action: any) => {
-                state.posts.searchedPosts = action.payload
+                state.posts.items = action.payload
                 state.posts.isSearchedPostsLoading = false
                 console.log(action.payload.serachedPosts)
             }),
