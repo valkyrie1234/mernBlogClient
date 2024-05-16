@@ -16,7 +16,7 @@ const MyHeader: React.FC = () => {
 
     const dispatch = useAppDispatch()
     const isAuth = useAppSelector(selectIsAuth)
-    const data = useAppSelector(state => state.authReducer.data)
+    const data = useAppSelector(state => state.USER.data)
     
 
 

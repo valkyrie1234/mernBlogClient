@@ -10,4 +10,5 @@ export interface IPostType {
     popularPosts: Array<IPostCard>,
     isPopularPostLoading: boolean,
     searchedPosts: Array <IPostCard>
+    isSearchedPostsLoading: boolean
 }

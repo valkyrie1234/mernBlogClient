@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from '../../axios/index'
 import { IFullPost } from "../../Types";
-import { AppDispatch, RootState } from "../store";
+import { RootState } from "../store";
 import { IPostType } from "../../Types/PostType";
 import { NameSpace } from "../../consts/consts";
 import { ICreateAsyncThunkType } from "../../Types/CreateAsyncThunkType";
@@ -22,13 +22,14 @@ const initialState: IInitialState = {
         isPopularPostLoading: true,
         lastFiveTags: [],
         isLastTagsLoading: true,
-        searchedPosts: []
+        searchedPosts: [],
+        isSearchedPostsLoading: true
     }
 }
 
 
-export const fetchSerachedPosts = createAsyncThunk('posts/fetchSerachedPosts', async (value: any) => {
-    const { data } = await axios.get(`/post/search/${value}`)
+export const fetchSearchedPosts = createAsyncThunk('posts/fetchSerachedPosts', async (value: string) => {
+    const { data } = value == '' ? await axios.get('/post') : await axios.get(`/post/search/${value}`) 
     return data
 })
 
@@ -67,65 +68,68 @@ const postsSlice = createSlice({
 
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchPosts.pending, (state: any) => {
+        builder.addCase(fetchPosts.pending, (state: RootState["POSTS"]) => {
             state.posts.items = [];
             state.posts.isLoading = true
         }),
-            builder.addCase(fetchPosts.fulfilled, (state: any, action: any) => {
+            builder.addCase(fetchPosts.fulfilled, (state: RootState["POSTS"], action: any) => {
                 state.posts.items = action.payload
                 state.posts.isLoading = false;
             }),
-            builder.addCase(fetchPosts.rejected, (state: any) => {
+            builder.addCase(fetchPosts.rejected, (state: RootState["POSTS"]) => {
                 state.posts.items = [];
                 state.posts.isLoading = false;
             }),
             ///////////// delete post
-            builder.addCase(deletePost.pending, (state: any, action: any) => {
+            builder.addCase(deletePost.pending, (state: RootState["POSTS"], action: any) => {
                 state.posts.items = state.posts.items.filter((post: any) => post._id !== action.meta.arg);
             }),
             //////////////currentPost
-            builder.addCase(fetchCurrentPost.pending, (state: any) => {
+            builder.addCase(fetchCurrentPost.pending, (state: RootState["POSTS"]) => {
                 state.posts.isCurrentPostLoading = true
             }),
-            builder.addCase(fetchCurrentPost.fulfilled, (state: any) => {
+            builder.addCase(fetchCurrentPost.fulfilled, (state: RootState["POSTS"]) => {
                 state.posts.isCurrentPostLoading = false
             }),
-            builder.addCase(fetchCurrentPost.rejected, (state: any) => {
+            builder.addCase(fetchCurrentPost.rejected, (state: RootState["POSTS"]) => {
                 state.posts.isCurrentPostLoading = false
             }),/////////////popular posts
-            builder.addCase(fetchPopularPosts.pending, (state: any) => {
+            builder.addCase(fetchPopularPosts.pending, (state: RootState["POSTS"]) => {
                 state.posts.popularPosts = []
                 state.posts.isPopularPostLoading = true
             }),
-            builder.addCase(fetchPopularPosts.fulfilled, (state: any, action: any) => {
+            builder.addCase(fetchPopularPosts.fulfilled, (state: RootState["POSTS"], action: any) => {
                 state.posts.popularPosts = action.payload
                 state.posts.isPopularPostLoading = false
             }),
-            builder.addCase(fetchPopularPosts.rejected, (state: any) => {
+            builder.addCase(fetchPopularPosts.rejected, (state: RootState["POSTS"]) => {
                 state.posts.popularPosts = []
                 state.posts.isPopularPostLoading = false
             }),
             ////////////////LastFiveTags
-            builder.addCase(fetchLastFiveTags.pending, (state: any) => {
+            builder.addCase(fetchLastFiveTags.pending, (state: RootState["POSTS"]) => {
                 state.posts.isLastTagsLoading = true
             }),
-            builder.addCase(fetchLastFiveTags.fulfilled, (state: any, action: any) => {
+            builder.addCase(fetchLastFiveTags.fulfilled, (state: RootState["POSTS"], action: any) => {
                 state.posts.lastFiveTags = action.payload
                 state.posts.isLastTagsLoading = false
             }),
-            builder.addCase(fetchLastFiveTags.rejected, (state: any) => {
+            builder.addCase(fetchLastFiveTags.rejected, (state: RootState["POSTS"]) => {
                 state.posts.lastFiveTags = []
                 state.posts.isLastTagsLoading = false
             }),
-            builder.addCase(fetchSerachedPosts.pending, (state: any) => {
+            builder.addCase(fetchSearchedPosts.pending, (state: RootState["POSTS"]) => {
                 state.posts.items = []
+                state.posts.isSearchedPostsLoading = true
             }),
-            builder.addCase(fetchSerachedPosts.fulfilled, (state: any, action: any) => {
-                state.posts.serachedPosts = action.payload
+            builder.addCase(fetchSearchedPosts.fulfilled, (state: RootState["POSTS"], action: any) => {
+                state.posts.searchedPosts = action.payload
+                state.posts.isSearchedPostsLoading = false
                 console.log(action.payload.serachedPosts)
             }),
-            builder.addCase(fetchSerachedPosts.rejected, (state: any) => {
+            builder.addCase(fetchSearchedPosts.rejected, (state: RootState["POSTS"]) => {
                 state.posts.items = []
+                state.posts.isSearchedPostsLoading = false
             })
     },
 });

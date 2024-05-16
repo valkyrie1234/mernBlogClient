@@ -31,7 +31,7 @@ const FullPost: React.FC = () => {
     const dispatch = useAppDispatch()
 
     const [postData, setPostData] = React.useState<IFullPost>()
-    const isLoading = useAppSelector((state) => state.postsReduser.posts.isCurrentPostLoading)
+    const isLoading = useAppSelector((state) => state.POSTS.posts.isCurrentPostLoading)
 
     const [showComment, setShowComment] = React.useState<boolean>(false)
 
@@ -79,8 +79,7 @@ const FullPost: React.FC = () => {
                         <Meta
                             title={<Title level={3}>{postData.title}</Title>}
                             description={<Title type='secondary' level={5}>{postData?.createdAt?.toString().slice(0, 10)}</Title>}
-                        >
-                        </Meta>
+                        />
                         <Text copyable>
                             <Markdown children={postData.text} />
                         </Text>

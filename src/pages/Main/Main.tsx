@@ -2,13 +2,14 @@ import React from 'react';
 import SideBar from '../../components/SideBar/SideBar';
 import PostCard from '../../components/Card/PostCard';
 import { useAppDispatch } from '../../store/Hooks/useDispatch';
-import { Row, Col, Button, Skeleton } from 'antd';
-import { fetchLastFiveTags, fetchPosts, fetchPopularPosts, fetchSerachedPosts } from '../../store/slices/posts';
+import { Row, Col, Button, Skeleton, Input, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons'
+import { fetchLastFiveTags, fetchPosts, fetchPopularPosts, fetchSearchedPosts } from '../../store/slices/posts';
 import { useAppSelector } from '../../store/Hooks/useSelector';
-
 import SideBarSkeleton from '../../components/SideBar/SideBarSkeleton';
 import PostCardSkeleton from '../../components/Card/PostCardSkeleton';
 import { MemoizedMyHeader } from '../../components/Header/MyHeader';
+import useDebounce from '../../customHooks/useDebounce';
 
 
 const Main = () => {
@@ -16,12 +17,15 @@ const Main = () => {
     const dispatch = useAppDispatch();
     const [search, setSearch] = React.useState<string>('')
 
-    const data = useAppSelector(state => state.authReducer.data)
-    const posts = useAppSelector(state => state.postsReduser.posts)
-    const popularPosts = useAppSelector((state) => state.postsReduser.posts.popularPosts)
-    const isPostsLoading = useAppSelector((state) => state.postsReduser.posts.isLoading)
+    const debouncedSearch = useDebounce(search, 1000)
 
-    const lastFiveTags = useAppSelector((state) => state.postsReduser.posts.lastFiveTags)
+    const data = useAppSelector(state => state.USER.data)
+    const posts = useAppSelector(state => state.POSTS.posts)
+    const popularPosts = useAppSelector((state) => state.POSTS.posts.popularPosts)
+    const isPostsLoading = useAppSelector((state) => state.POSTS.posts.isLoading)
+    const searchedPosts = useAppSelector((state) => state.POSTS.posts.searchedPosts)
+    const lastFiveTags = useAppSelector((state) => state.POSTS.posts.lastFiveTags)
+    const isSearchedPostsloading = useAppSelector((state) => state.POSTS.posts.isSearchedPostsLoading)
 
 
 
@@ -34,7 +38,6 @@ const Main = () => {
 
     const onChangeHandler = (event: any) => {
         setSearch(event.target.value)
-        dispatch(fetchSerachedPosts(search))
     }
 
     React.useEffect(() => {
@@ -42,27 +45,42 @@ const Main = () => {
         dispatch(fetchPopularPosts())
         dispatch(fetchLastFiveTags())
     }, [])
+    React.useEffect(() => {
+        dispatch(fetchSearchedPosts(debouncedSearch))
+    }, [debouncedSearch])
 
-    console.log('123')
-    console.log('123')
+
     return (
         <div>
             <MemoizedMyHeader />
             <Row style={{ paddingTop: 20 }}>
-                <input type="text" value={search} onChange={onChangeHandler} />
                 {
                     isPostsLoading
                         ? (<Col offset={6} span={1} style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Skeleton.Button active />
                             <Skeleton.Button active />
                         </Col>)
-                        : (<Col offset={6} span={1} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        : (<Col offset={6} span={4} style={{ display: 'flex', justifyContent: 'space-between', gap: 4 }}>
+                            <div style={{ display: 'flex', background: 'white', alignItems:'center' }}>
+                                <Input
+                                    type="text"
+                                    placeholder='search...'
+                                    value={search}
+                                    style={{ borderRadius: 0, border:0 }}
+                                    onChange={onChangeHandler}
+                                />
+                                {
+                                    isSearchedPostsloading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 20, marginLeft:-40 }} spin />} /> : ''
+                                }
+                                
+
+                            </div>
                             <Button style={{ borderRadius: 0, border: '0px' }} onClick={showAll}>all</Button>
                             <Button style={{ borderRadius: 0, border: '0px', borderLeft: '1px solid gray' }} onClick={showPopular}>popular</Button>
                         </Col>)
                 }
             </Row>
-            {/* <Row>
+            <Row>
                 <Col span={8} offset={6}>
                     {
                         !isPopular ?
@@ -101,6 +119,22 @@ const Main = () => {
                                 />
                             ))
                     }
+                    {
+                        searchedPosts ? (searchedPosts?.map((el, i) => (
+                            <PostCard
+                                key={i}
+                                style={{ marginTop: 10, marginBottom: 10 }}
+                                _id={el._id}
+                                title={el.title}
+                                imageUrl={el.imageUrl}
+                                viewsCount={el.viewsCount}
+                                createdAt={el.createdAt}
+                                tags={el.tags}
+                                user={el.user}
+                                editable={data?._id === el.user._id}
+                            />
+                        ))) : <>kek</>
+                    }
                 </Col>
                 {
                     isPostsLoading
@@ -108,7 +142,7 @@ const Main = () => {
                         : (<SideBar tags={lastFiveTags} style={{ marginTop: '10px', position: 'sticky', top: 10, alignSelf: 'start' }} />)
                 }
 
-            </Row> */}
+            </Row>
         </div>
 
     );

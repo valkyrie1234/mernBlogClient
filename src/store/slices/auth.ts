@@ -3,8 +3,7 @@ import axios from '../../axios/index';
 import { IUserReg, IUserLogin } from "../../Types";
 import { NameSpace } from "../../consts/consts";
 import { IUserSliceType, IUserUpdateDataType } from "../../Types/UserType";
-import { AppDispatch, RootState } from "../store";
-import { AxiosInstance } from "axios";
+import {  RootState } from "../store";
 import { ICreateAsyncThunkType } from "../../Types/CreateAsyncThunkType";
 
 export interface IInitialState {
@@ -42,11 +41,11 @@ export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async () => {
     return data;
 })
 
-export const fecethUpdatedUserData = createAsyncThunk<IUserSliceType, IUserUpdateDataType,ICreateAsyncThunkType>('auth/fecethUpdatedUserData', 
-async (params: IUserUpdateDataType) => {
-    const { data } = await axios.patch(`/profile/user/${params._id}`, params.data)
-    return data
-})
+export const fecethUpdatedUserData = createAsyncThunk<IUserSliceType, IUserUpdateDataType, ICreateAsyncThunkType>('auth/fecethUpdatedUserData',
+    async (params: IUserUpdateDataType) => {
+        const { data } = await axios.patch(`/profile/user/${params._id}`, params.data)
+        return data
+    })
 
 const authSlice = createSlice({
     name: NameSpace.User,
@@ -59,55 +58,55 @@ const authSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchUserData.pending, (state: any) => {
+        builder.addCase(fetchUserData.pending, (state: RootState["USER"]) => {
             state.status = 'loading'
             state.data = null;
         }),
-            builder.addCase(fetchUserData.fulfilled, (state: any, action: any) => {
+            builder.addCase(fetchUserData.fulfilled, (state: RootState["USER"], action: any) => {
                 state.data = action.payload
                 window.localStorage.setItem('token', action.payload.token)
                 state.status = 'success';
             }),
-            builder.addCase(fetchUserData.rejected, (state: any) => {
+            builder.addCase(fetchUserData.rejected, (state: RootState["USER"]) => {
                 state.status = 'error'
                 state.data = null;
             }),
-            builder.addCase(fetchAuthMe.pending, (state: any) => {
+            builder.addCase(fetchAuthMe.pending, (state: RootState["USER"]) => {
                 state.status = 'loading'
                 state.data = null;
             }),
-            builder.addCase(fetchAuthMe.fulfilled, (state: any, action: any) => {
+            builder.addCase(fetchAuthMe.fulfilled, (state: RootState["USER"], action: any) => {
                 state.data = action.payload
                 state.status = 'success';
             }),
-            builder.addCase(fetchAuthMe.rejected, (state: any) => {
+            builder.addCase(fetchAuthMe.rejected, (state: RootState["USER"]) => {
                 state.status = 'error'
                 state.data = null;
             }),
-            builder.addCase(fetchUserReg.pending, (state: any) => {
+            builder.addCase(fetchUserReg.pending, (state: RootState["USER"]) => {
                 state.status = 'loading'
                 state.data = null;
             }),
-            builder.addCase(fetchUserReg.fulfilled, (state: any, action: any) => {
+            builder.addCase(fetchUserReg.fulfilled, (state: RootState["USER"], action: any) => {
                 state.data = action.payload
                 window.localStorage.setItem('token', action.payload.token)
                 state.status = 'success';
             }),
-            builder.addCase(fetchUserReg.rejected, (state: any) => {
+            builder.addCase(fetchUserReg.rejected, (state: RootState["USER"]) => {
                 state.status = 'error'
                 state.data = null;
             })////////////////updateData
             ,
-            builder.addCase(fecethUpdatedUserData.pending, (state: any) => {
+            builder.addCase(fecethUpdatedUserData.pending, (state: RootState["USER"]) => {
                 state.status = 'loading'
                 state.data = null;
             })
             ,
-            builder.addCase(fecethUpdatedUserData.fulfilled, (state: any, action: any) => {
+            builder.addCase(fecethUpdatedUserData.fulfilled, (state: RootState["USER"], action: any) => {
                 state.status = 'success'
                 state.data = action.payload;
             }),
-            builder.addCase(fecethUpdatedUserData.rejected, (state: any) => {
+            builder.addCase(fecethUpdatedUserData.rejected, (state: RootState["USER"]) => {
                 state.status = 'error'
                 state.data = null;
             })
@@ -115,7 +114,7 @@ const authSlice = createSlice({
 });
 
 
-export const selectIsAuth = (state: any) => Boolean(state.authReducer.data)
+export const selectIsAuth = (state: any) => Boolean(state.USER.data)
 
 export const authReducer = authSlice.reducer
 
