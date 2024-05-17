@@ -5,6 +5,7 @@ const { Title } = Typography
 
 
 
+
 const SideBarSkeleton: React.FC = () => {
     const data = [
         'Racing car sprays burning fuel into crowd.',
@@ -17,7 +18,8 @@ const SideBarSkeleton: React.FC = () => {
 
 
     return (
-        <Col span={4} style={{marginTop:10}}>
+
+        <Col span={4} style={{ marginTop: 10 }}>
             <List
                 bordered
                 dataSource={data}

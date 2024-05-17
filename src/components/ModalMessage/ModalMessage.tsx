@@ -18,7 +18,7 @@ const ModalMessage: React.FC<IModalMessageProps> = ({ setDataAction }) => {
     const [message, setMessage] = React.useState<string>('')
     const [openEmoji, setOpenEmoji] = React.useState<boolean>(false)
 
-    const userId = useAppSelector(state => state.authReducer.data?._id)
+    const userId = useAppSelector(state => state.USER.data?._id)
 
     const { id } = useParams();
 
