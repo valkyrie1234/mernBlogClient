@@ -19,7 +19,7 @@ export interface IPostlistProps {
 
 const PostsList: React.FC<IPostlistProps> = ({ data, posts, popularPosts, isPostsLoading, isPopular, searchedPosts }) => {
 
-    console.log(searchedPosts)
+  
     return (
         <Col span={8} offset={6}>
             {

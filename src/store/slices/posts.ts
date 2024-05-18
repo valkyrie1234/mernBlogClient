@@ -23,13 +23,15 @@ const initialState: IInitialState = {
         lastFiveTags: [],
         isLastTagsLoading: true,
         searchedPosts: [],
-        isSearchedPostsLoading: true
+        isSearchedPostsLoading: true,
+        SearchedPostsError: ''
     }
 }
 
 
 export const fetchSearchedPosts = createAsyncThunk('posts/fetchSerachedPosts', async (value: string) => {
     const { data } = value == '' ? await axios.get('/post') : await axios.get(`/post/search/${value}`) 
+    console.log(data)
     return data
 })
 
@@ -123,12 +125,12 @@ const postsSlice = createSlice({
                 state.posts.isSearchedPostsLoading = true
             }),
             builder.addCase(fetchSearchedPosts.fulfilled, (state: RootState["POSTS"], action: any) => {
-                state.posts.items = action.payload
+                state.posts.searchedPosts = action.payload
                 state.posts.isSearchedPostsLoading = false
                 console.log(action.payload.serachedPosts)
             }),
-            builder.addCase(fetchSearchedPosts.rejected, (state: RootState["POSTS"]) => {
-                state.posts.items = []
+            builder.addCase(fetchSearchedPosts.rejected, (state: RootState["POSTS"], action) => {
+                state.posts.SearchedPostsError = action.error.message
                 state.posts.isSearchedPostsLoading = false
             })
     },

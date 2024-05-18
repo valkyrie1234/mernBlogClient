@@ -7,12 +7,7 @@ const { Title } = Typography
 
 
 
-const SideBar: React.FC<SideBarProps> = ({ style, tags, isPostsLoading }) => {
-
-
-    const colorTags = (): string => {
-        return '#' + Math.floor(Math.random() * 16777215).toString(16);
-    }
+const SideBar: React.FC<SideBarProps> = React.memo(({ style, tags, isPostsLoading, useCallbackcolorTags }) => {
 
 
     return (
@@ -26,7 +21,9 @@ const SideBar: React.FC<SideBarProps> = ({ style, tags, isPostsLoading }) => {
                             bordered
                             dataSource={tags}
                             renderItem={(tag) => (
-                                <Tag color={colorTags()}>#{tag}</Tag>
+                                <List.Item>
+                                    <Tag color={useCallbackcolorTags()}>#{tag}</Tag>
+                                </List.Item>
                             )}
                         />
                         <Title level={4}>Последние 5 уникальных тегов!!!</Title>
@@ -34,6 +31,6 @@ const SideBar: React.FC<SideBarProps> = ({ style, tags, isPostsLoading }) => {
             }
         </>
     );
-}
+})
 
 export default SideBar;

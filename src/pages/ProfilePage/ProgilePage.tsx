@@ -16,7 +16,7 @@ const ProfilePage: React.FC = () => {
     const [newName, setNewName] = React.useState<string>('');
     const [newEmail, setNewEmail] = React.useState<string>('');
     const [visibilityModal, setVisibilityModal] = React.useState<boolean>(false)
-    const user = useAppSelector((state) => state.authReducer.data)
+    const user = useAppSelector((state) => state.USER.data)
     const navigate = useNavigate();
     console.log(user)
     const inputAvatarRef = React.useRef<HTMLInputElement>(null)

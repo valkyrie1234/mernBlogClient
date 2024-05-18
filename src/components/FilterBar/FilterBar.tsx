@@ -7,6 +7,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { fetchSearchedPosts } from '../../store/slices/posts';
 
 
+
 export interface IFilterBar {
     isPostsLoading: boolean,
     setIsPopular: (data: boolean) => void

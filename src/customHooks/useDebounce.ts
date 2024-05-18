@@ -1,23 +1,18 @@
 import React from 'react'
 
 function useDebounce(value:string, delay:number) {
-    // value and delay in ms (1000ms = 1s)
-    // debounced values
     const [debouncedValue, setDebouncedValue] = React.useState(value);
 
-    React.useEffect(
-        () => {
-            // Update debounced value after delay
-            const t = setTimeout(() => {
+    React.useEffect(() => {
+            const timer = setTimeout(() => {
                 setDebouncedValue(value);
             }, delay);
 
-            // clean up the timeout after value changes
             return () => {
-                clearTimeout(t);
+                clearTimeout(timer);
             };
         },
-        [value, delay] // re-run if value or delay changes
+        [value, delay] 
     );
     return debouncedValue;
 }

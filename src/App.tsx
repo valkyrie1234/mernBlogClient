@@ -6,14 +6,14 @@ import Registartion from './pages/Registration/Registration';
 import FullPost from './pages/FullPost';
 import { useAppDispatch } from './store/Hooks/useDispatch';
 import { fetchAuthMe } from './store/slices/auth';
-import CreatePost from './pages/CreatePost/CreatePost';
+// import CreatePost from './pages/CreatePost/CreatePost';
 import { AnimatePresence } from 'framer-motion';
-import ProfilePage from './pages/ProfilePage/ProgilePage';
 import { Paths } from './consts/consts';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
+import LoadingPage from './pages/LoadingPage/LoadingPage';
 
-
-
+const ProfilePage = React.lazy(() => import('./pages/ProfilePage/ProgilePage'))
+const CreatePost = React.lazy(() => import('./pages/CreatePost/CreatePost'))
 
 const App: React.FC = () => {
 
@@ -29,12 +29,12 @@ const App: React.FC = () => {
       <AnimatePresence>
         <Routes>
           <Route path={Paths.Main} element={<Main />} />
-          <Route path={Paths.CreatePost} element={<CreatePost />} />
-          <Route path={Paths.EditPost} element={<CreatePost />} />
+          <Route path={Paths.CreatePost} element={<React.Suspense fallback={<LoadingPage/>}> <CreatePost /></React.Suspense>} />
+          <Route path={Paths.EditPost} element={<React.Suspense fallback={<LoadingPage/>}> <CreatePost /></React.Suspense>} />
           <Route path={Paths.Login} element={<Login />} />
           <Route path={Paths.Registration} element={<Registartion />} />
           <Route path={Paths.CurrentPost} element={<FullPost />} />
-          <Route path={Paths.UserProfile} element={<ProfilePage />} />
+          <Route path={Paths.UserProfile} element={<React.Suspense fallback={<LoadingPage/>}> <ProfilePage /></React.Suspense>} />
           <Route path={Paths.Error} element={<ErrorPage/>} />
         </Routes>
       </AnimatePresence>

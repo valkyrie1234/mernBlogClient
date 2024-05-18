@@ -20,7 +20,11 @@ const Main = () => {
     const isPostsLoading = useAppSelector((state) => state.POSTS.posts.isLoading)
     const searchedPosts = useAppSelector((state) => state.POSTS.posts.searchedPosts)
     const lastFiveTags = useAppSelector((state) => state.POSTS.posts.lastFiveTags)
+    //Вынести состояния в дочерние компоненты, чтобы не было лишних ререндеров 
 
+        const useCallbackcolorTags = React.useCallback((): string => {
+            return '#' + Math.floor(Math.random() * 16777215).toString(16);
+        }, [lastFiveTags])
 
     React.useEffect(() => {
         dispatch(fetchPosts())
@@ -35,7 +39,7 @@ const Main = () => {
             <FilterBar isPostsLoading={isPostsLoading} setIsPopular={setIsPopular} />
             <Row>
                 <PostsList data={data} posts={posts} popularPosts={popularPosts} isPostsLoading={isPostsLoading} isPopular={isPopular} searchedPosts={searchedPosts} />
-                <SideBar isPostsLoading={isPostsLoading} tags={lastFiveTags} style={{ marginTop: '10px', position: 'sticky', top: 10, alignSelf: 'start' }} />
+                <SideBar useCallbackcolorTags={useCallbackcolorTags} isPostsLoading={isPostsLoading} tags={lastFiveTags} style={{ marginTop: '10px', position: 'sticky', top: 10, alignSelf: 'start' }} />
             </Row>
         </div>
 
