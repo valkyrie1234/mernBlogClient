@@ -14,9 +14,6 @@ const Main = () => {
     const dispatch = useAppDispatch();
 
 
-    const data = useAppSelector(state => state.USER.data)
-    const posts = useAppSelector(state => state.POSTS.posts)
-    const popularPosts = useAppSelector((state) => state.POSTS.posts.popularPosts)
     const isPostsLoading = useAppSelector((state) => state.POSTS.posts.isLoading)
     const searchedPosts = useAppSelector((state) => state.POSTS.posts.searchedPosts)
     const lastFiveTags = useAppSelector((state) => state.POSTS.posts.lastFiveTags)
@@ -38,7 +35,7 @@ const Main = () => {
             <MemoizedMyHeader />
             <FilterBar isPostsLoading={isPostsLoading} setIsPopular={setIsPopular} />
             <Row>
-                <PostsList data={data} posts={posts} popularPosts={popularPosts} isPostsLoading={isPostsLoading} isPopular={isPopular} searchedPosts={searchedPosts} />
+                <PostsList isPostsLoading={isPostsLoading} isPopular={isPopular} searchedPosts={searchedPosts} />
                 <SideBar useCallbackcolorTags={useCallbackcolorTags} isPostsLoading={isPostsLoading} tags={lastFiveTags} style={{ marginTop: '10px', position: 'sticky', top: 10, alignSelf: 'start' }} />
             </Row>
         </div>

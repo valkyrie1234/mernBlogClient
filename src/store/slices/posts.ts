@@ -30,8 +30,7 @@ const initialState: IInitialState = {
 
 
 export const fetchSearchedPosts = createAsyncThunk('posts/fetchSerachedPosts', async (value: string) => {
-    const { data } = value == '' ? await axios.get('/post') : await axios.get(`/post/search/${value}`) 
-    console.log(data)
+    const { data } = value ? await axios.get(`/post/search/${value}`) : await axios.get(`/post`)
     return data
 })
 
@@ -85,6 +84,7 @@ const postsSlice = createSlice({
             ///////////// delete post
             builder.addCase(deletePost.pending, (state: RootState["POSTS"], action: any) => {
                 state.posts.items = state.posts.items.filter((post: any) => post._id !== action.meta.arg);
+                state.posts.searchedPosts = state.posts.items.filter((post: any) => post._id !== action.meta.arg);
             }),
             //////////////currentPost
             builder.addCase(fetchCurrentPost.pending, (state: RootState["POSTS"]) => {

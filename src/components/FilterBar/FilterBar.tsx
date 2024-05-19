@@ -23,7 +23,8 @@ const FilterBar: React.FC<IFilterBar> = ({ isPostsLoading, setIsPopular }) => {
     const debouncedSearch = useDebounce(search, 1000)
 
     React.useEffect(() => {
-        dispatch(fetchSearchedPosts(debouncedSearch))
+        console.log('12')
+        dispatch(fetchSearchedPosts(debouncedSearch.trim()))
     }, [debouncedSearch])
 
     const showPopular = (): void => {
