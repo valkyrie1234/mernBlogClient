@@ -43,6 +43,17 @@ export const postsApi = createApi({
             }),
             invalidatesTags: ['Posts'] ,
         }),
+        createPost: builder.mutation({
+            query: (body) => ({
+                url: Endpoints.posts,
+                method: 'POST',
+                body,
+                headers: {
+                    Authorization: useAuthToken()
+                }
+            }),
+            invalidatesTags: ['Posts'] ,
+        }),
     })
 })
 

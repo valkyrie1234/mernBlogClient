@@ -6,7 +6,8 @@ import SimpleMDE from 'react-simplemde-editor';
 import styles from './CreatePost.module.scss';
 import 'easymde/dist/easymde.min.css';
 import PageTransition from '../../components/PageTransition/PageTransition';
- import {MemoizedMyHeader} from '../../components/Header/MyHeader';
+import { MemoizedMyHeader } from '../../components/Header/MyHeader';
+import { postsApi } from '../../store/Api/PostApi';
 
 const CreatePost: React.FC = () => {
     const { id } = useParams()
@@ -79,26 +80,31 @@ const CreatePost: React.FC = () => {
         setImageUrl('')
     }
 
+    const [createPost] = postsApi.useCreatePostMutation()
 
     const onSubmit = async () => {
-        try {
-            const fields = {
-                title,
-                text,
-                imageUrl,
-                tags,
-            }
-
-            const { data } = isEditing
-                ? await axios.patch(`/post/${id}`, fields)
-                : await axios.post('/post', fields);
-
-            const _id = isEditing ? id : data._id;
-            navigate(`/post/${_id}`)
-
-        } catch (error) {
-            console.log(error)
+        // try {
+        const fields = {
+            title,
+            text,
+            imageUrl,
+            tags,
         }
+
+        //     const { data } = isEditing
+        //         ? await axios.patch(`/post/${id}`, fields)
+        //         : await axios.post('/post', fields);
+
+        //     const _id = isEditing ? id : data._id;
+        //     navigate(`/post/${_id}`)
+
+        // } catch (error) {
+        //     console.log(error)
+        // }
+
+        navigate(`/`)
+        createPost(fields)
+
     }
 
 

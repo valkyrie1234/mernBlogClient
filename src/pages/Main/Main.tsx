@@ -14,11 +14,11 @@ import { postsApi } from '../../store/Api/PostApi';
 const Main = () => {
     const [isPopular, setIsPopular] = React.useState(false)
     const dispatch = useAppDispatch();
-    const { data: posts, error } = postsApi.useGetAllPostsQuery()
+    const { data: posts, error, isLoading: isPostsLoading } = postsApi.useGetAllPostsQuery()
 
     console.log(posts, error)
 
-    const isPostsLoading = useAppSelector((state) => state.POSTS.posts.isLoading)
+    // const isPostsLoading = useAppSelector((state) => state.POSTS.posts.isLoading)
     const searchedPosts = useAppSelector((state) => state.POSTS.posts.searchedPosts)
     const lastFiveTags = useAppSelector((state) => state.POSTS.posts.lastFiveTags)
     //Вынести состояния в дочерние компоненты, чтобы не было лишних ререндеров 
