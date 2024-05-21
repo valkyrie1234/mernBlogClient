@@ -17,3 +17,18 @@ export const Paths = {
     UserProfile: '/profile/:id',
     Error: '*'
 } as const 
+
+export const Api = {
+    PostsApi: 'PostsApi'
+} as const 
+
+export const BaseUrl = {
+    url: 'http://localhost:4444'
+} as const
+
+export const Endpoints = {
+    posts: '/post',
+    popularPosts: '/post/popular',
+    serachedPosts: '/post/search/',
+    currentPost: '/post/'
+} as const

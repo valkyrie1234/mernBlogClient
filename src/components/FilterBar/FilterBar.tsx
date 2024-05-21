@@ -5,6 +5,7 @@ import useDebounce from '../../customHooks/useDebounce';
 import { Row, Col, Button, Skeleton, Input, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons'
 import { fetchSearchedPosts } from '../../store/slices/posts';
+import { postsApi } from '../../store/Api/PostApi';
 
 
 
@@ -20,15 +21,22 @@ const FilterBar: React.FC<IFilterBar> = ({ isPostsLoading, setIsPopular }) => {
     const isSearchedPostsloading = useAppSelector((state) => state.POSTS.posts.isSearchedPostsLoading)
     const dispatch = useAppDispatch()
 
+    const [fetchPopularPosts] = postsApi.useLazyGetAllPostsQuery()
     const debouncedSearch = useDebounce(search, 1000)
 
+
+
+
+
     React.useEffect(() => {
-        console.log('12')
+        // console.log('12')
         dispatch(fetchSearchedPosts(debouncedSearch.trim()))
+        
     }, [debouncedSearch])
 
     const showPopular = (): void => {
         setIsPopular(true)
+        fetchPopularPosts()
     }
     const showAll = (): void => {
         setIsPopular(false)

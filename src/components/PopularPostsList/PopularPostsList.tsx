@@ -4,6 +4,7 @@ import { useAppSelector } from '../../store/Hooks/useSelector';
 import PostCard from '../Card/PostCard';
 import { IPostCard } from '../../Types';
 import PostCardSkeleton from '../Card/PostCardSkeleton';
+import { postsApi } from '../../store/Api/PostApi';
 
 
 export interface ISearchedPostList {
@@ -13,13 +14,15 @@ export interface ISearchedPostList {
 const PopularPostList: React.FC<ISearchedPostList> = ({ isPopular }) => {
 
     const data = useAppSelector(state => state.USER.data)
-    const popularPosts = useAppSelector((state) => state.POSTS.posts.popularPosts)
     const isPostsLoading = useAppSelector((state) => state.POSTS.posts.isLoading)
 
+    const {data:posts, error, isLoading} = postsApi.useGetPopularPostsQuery()
+
+    // console.log(posts, error)
     return (
         <Col>
             {
-                isPopular && (isPostsLoading ? [...Array(5)] : popularPosts).map((el: IPostCard, i: number) => isPostsLoading ? (
+                isPopular && (isLoading ? [...Array(5)] : posts)?.map((el: IPostCard, i: number) => isPostsLoading ? (
                     <PostCardSkeleton key={i} />
                 ) : (
                     <PostCard

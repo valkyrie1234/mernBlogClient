@@ -20,7 +20,7 @@ const PostsList: React.FC<IPostlistProps> = ({ isPostsLoading, isPopular, search
     return (
         <Col span={8} offset={6}>
             {
-                !isPopular && !searchedPosts ? <List isPostsLoading={isPostsLoading} /> : <PopularPostList isPopular={isPopular} />
+                !isPopular && searchedPosts.length === 0 ? <List isPostsLoading={isPostsLoading} /> : <PopularPostList isPopular={isPopular} />
             }
             <SearchedPostsList isPopular={isPopular} />
         </Col>

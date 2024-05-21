@@ -1,4 +1,4 @@
-import { Col, Card, Typography, Avatar, List } from 'antd';
+ import { Col, Card, Typography, Avatar, List } from 'antd';
 import { CommentsProps } from '../../Types';
 
 

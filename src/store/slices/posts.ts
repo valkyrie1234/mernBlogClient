@@ -39,10 +39,10 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
     return data;
 })
 
-export const fetchPopularPosts = createAsyncThunk('posts/fetchPopularPosts', async () => {
-    const { data } = await axios.get('/post/popular');
-    return data;
-})
+// export const fetchPopularPosts = createAsyncThunk('posts/fetchPopularPosts', async () => {
+//     const { data } = await axios.get('/post/popular');
+//     return data;
+// })
 
 export const fetchLastFiveTags = createAsyncThunk('post/fetchLastFiveTags', async () => {
     const { data } = await axios.get('/tags');
@@ -96,18 +96,18 @@ const postsSlice = createSlice({
             builder.addCase(fetchCurrentPost.rejected, (state: RootState["POSTS"]) => {
                 state.posts.isCurrentPostLoading = false
             }),/////////////popular posts
-            builder.addCase(fetchPopularPosts.pending, (state: RootState["POSTS"]) => {
-                state.posts.popularPosts = []
-                state.posts.isPopularPostLoading = true
-            }),
-            builder.addCase(fetchPopularPosts.fulfilled, (state: RootState["POSTS"], action: any) => {
-                state.posts.popularPosts = action.payload
-                state.posts.isPopularPostLoading = false
-            }),
-            builder.addCase(fetchPopularPosts.rejected, (state: RootState["POSTS"]) => {
-                state.posts.popularPosts = []
-                state.posts.isPopularPostLoading = false
-            }),
+            // builder.addCase(fetchPopularPosts.pending, (state: RootState["POSTS"]) => {
+            //     state.posts.popularPosts = []
+            //     state.posts.isPopularPostLoading = true
+            // }),
+            // builder.addCase(fetchPopularPosts.fulfilled, (state: RootState["POSTS"], action: any) => {
+            //     state.posts.popularPosts = action.payload
+            //     state.posts.isPopularPostLoading = false
+            // }),
+            // builder.addCase(fetchPopularPosts.rejected, (state: RootState["POSTS"]) => {
+            //     state.posts.popularPosts = []
+            //     state.posts.isPopularPostLoading = false
+            // }),
             ////////////////LastFiveTags
             builder.addCase(fetchLastFiveTags.pending, (state: RootState["POSTS"]) => {
                 state.posts.isLastTagsLoading = true

@@ -3,6 +3,7 @@ import { Col, Typography } from 'antd';
 import { useAppSelector } from '../../store/Hooks/useSelector';
 import PostCard from '../Card/PostCard';
 import { IPostCard } from '../../Types';
+import { postsApi } from '../../store/Api/PostApi';
 
 const { Title } = Typography;
 
@@ -10,14 +11,18 @@ export interface ISearchedPostList {
     isPopular: boolean
 }
 
-const SearchedPostsList: React.FC<ISearchedPostList> = ({isPopular}) => {
-    
+const SearchedPostsList: React.FC<ISearchedPostList> = ({ isPopular }) => {
+
     const data = useAppSelector(state => state.USER.data)
     const searchedPosts = useAppSelector((state) => state.POSTS.posts.searchedPosts)
+
+    // const { data: posts, error } = postsApi.useGetAllPostsQuery()
+    const { data: posts } = postsApi.useGetAllPostsQuery()
+    // console.log(posts, error)
     return (
         <Col>
             {
-                searchedPosts && !isPopular && (searchedPosts?.map((el: IPostCard, i: number) => (
+                searchedPosts && !isPopular && (posts?.map((el: IPostCard, i: number) => (
                     <PostCard
                         key={i}
                         style={{ marginTop: 10, marginBottom: 10 }}

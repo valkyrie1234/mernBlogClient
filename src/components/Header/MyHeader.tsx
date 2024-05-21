@@ -17,7 +17,7 @@ const MyHeader: React.FC = () => {
     const dispatch = useAppDispatch()
     const isAuth = useAppSelector(selectIsAuth)
     const data = useAppSelector(state => state.USER.data)
-    
+
 
 
     const onClicklogout = (): void => {
@@ -33,15 +33,18 @@ const MyHeader: React.FC = () => {
             <Col offset={6} span={12}>
 
                 {
-                    !isAuth ? (<Row justify={'space-between'} align={'middle'}>
-                        <Col span={12}>
-                            <Avatar size={48} icon={<Link to={Paths.Main}><AlertOutlined /></Link>} />
-                        </Col>
-                        <Col span={12} style={{ display: 'flex', justifyContent: 'end', gap: '12px' }}>
-                            <Button style={{ borderRadius: '0px' }} type='primary'><Link to={Paths.Registration}>Зарегистрироваться</Link></Button>
-                            <Button style={{ borderRadius: '0px' }} type='primary'><Link to={Paths.Login}>Войти</Link></Button>
-                        </Col>
-                    </Row>) :
+                    !isAuth
+                        ?
+                        (<Row justify={'space-between'} align={'middle'}>
+                            <Col span={12}>
+                                <Avatar size={48} icon={<Link to={Paths.Main}><AlertOutlined /></Link>} />
+                            </Col>
+                            <Col span={12} style={{ display: 'flex', justifyContent: 'end', gap: '12px' }}>
+                                <Button style={{ borderRadius: '0px' }} type='primary'><Link to={Paths.Registration}>Зарегистрироваться</Link></Button>
+                                <Button style={{ borderRadius: '0px' }} type='primary'><Link to={Paths.Login}>Войти</Link></Button>
+                            </Col>
+                        </Row>)
+                        :
                         (<Row justify={'space-between'} align={'middle'}>
                             <Col span={12}>
                                 <Avatar size={48} icon={<Link to={'/'}><AlertOutlined /></Link>} />

@@ -6,6 +6,7 @@ import { IPostCard } from './../../Types/index';
 import { useAppDispatch } from '../../store/Hooks/useDispatch';
 import { deletePost } from '../../store/slices/posts';
 import blueFon from '../../assets/blue_fon.jpg'
+import { postsApi } from '../../store/Api/PostApi';
 
 const { Meta } = Card;
 const { Title } = Typography
@@ -16,12 +17,15 @@ const PostCard: React.FC<IPostCard> = ({ style, _id, imageUrl, createdAt, title,
 
     const dispatch = useAppDispatch();
 
-    const removePost = () => {
-        if (window.confirm('Вы действительно хотите удалить пост?')) {
-            dispatch(deletePost(_id))
-        }
-    }
+    const [deletePostTest, error] = postsApi.useDeletePostMutation()
 
+    const removePost = () => {
+        //  if (window.confirm('Вы действительно хотите удалить пост?')) {
+        //       dispatch(deletePost(_id))
+        //  }
+        deletePostTest(_id)
+    }
+    console.log(error)
     return (
         <Row style={style}>
             <Col span={22}>

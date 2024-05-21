@@ -16,6 +16,7 @@ const List: React.FC<ISearchedPostList> = ({ isPostsLoading }) => {
     const posts = useAppSelector((state) => state.POSTS.posts.items)
     const data = useAppSelector(state => state.USER.data)
 
+    console.log(111)
 
 
     return (
