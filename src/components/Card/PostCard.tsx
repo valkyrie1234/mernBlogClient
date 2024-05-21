@@ -15,15 +15,11 @@ const { Title } = Typography
 
 const PostCard: React.FC<IPostCard> = ({ style, _id, imageUrl, createdAt, title, tags, viewsCount, user, editable, postComment }) => {
 
-    const dispatch = useAppDispatch();
-
     const [deletePostTest, error] = postsApi.useDeletePostMutation()
-
     const removePost = () => {
-        //  if (window.confirm('Вы действительно хотите удалить пост?')) {
-        //       dispatch(deletePost(_id))
-        //  }
-        deletePostTest(_id)
+        if (window.confirm('Вы действительно хотите удалить пост?')) {
+            deletePostTest(_id)
+        }
     }
     console.log(error)
     return (

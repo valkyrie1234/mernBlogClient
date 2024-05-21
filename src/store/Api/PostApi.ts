@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Api, BaseUrl, Endpoints } from '../../consts/consts';
-import { IPostCard } from '../../Types';
+import { IFullPost, IPostCard } from '../../Types';
 
 
 const useAuthToken = () => {
@@ -13,13 +13,13 @@ export const postsApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: BaseUrl.url,
     }),
-    tagTypes: ['Posts'],
+    tagTypes: ['Posts', 'CurrentPost'],
     endpoints: (builder) => ({
         getAllPosts: builder.query<IPostCard[], void>({
             query: () => ({
                 url: Endpoints.posts
             }),
-            providesTags:  ['Posts'],
+            providesTags: ['Posts'],
         }),
         getPopularPosts: builder.query<IPostCard[], void>({
             query: () => ({
@@ -33,6 +33,26 @@ export const postsApi = createApi({
             }),
             providesTags: ['Posts'],
         }),
+        getCurrentPost: builder.query<IFullPost, string>({
+            query: (id) => ({
+                url: `${Endpoints.currentPost}${id}`
+            }),
+            providesTags: ['CurrentPost'],
+        }),
+        sendComment: builder.mutation<any, any>({
+            query: ({ postId, comment, user }) => ({
+                url: `/comment/post/${postId}`,
+                method: 'PATCH',
+                body: {  
+                    user, 
+                    comment 
+                },
+                headers: {
+                    Authorization: useAuthToken()
+                }
+            }),
+            invalidatesTags: ['CurrentPost'],
+        }),
         deletePost: builder.mutation({
             query: (id: any) => ({
                 url: `/post/${id}`,
@@ -41,7 +61,7 @@ export const postsApi = createApi({
                     Authorization: useAuthToken()
                 }
             }),
-            invalidatesTags: ['Posts'] ,
+            invalidatesTags: ['Posts'],
         }),
         createPost: builder.mutation({
             query: (body) => ({
@@ -52,10 +72,18 @@ export const postsApi = createApi({
                     Authorization: useAuthToken()
                 }
             }),
-            invalidatesTags: ['Posts'] ,
+            invalidatesTags: ['Posts'],
         }),
     })
 })
 
 
-export const { useGetAllPostsQuery, useLazyGetPopularPostsQuery, useGetSearchedPostsQuery, useLazyGetSearchedPostsQuery, useDeletePostMutation } = postsApi 
+export const {
+    useGetAllPostsQuery,
+    useLazyGetPopularPostsQuery,
+    useGetSearchedPostsQuery,
+    useLazyGetSearchedPostsQuery,
+    useDeletePostMutation,
+    useLazyGetCurrentPostQuery,
+    useSendCommentMutation
+} = postsApi 

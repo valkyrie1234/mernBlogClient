@@ -5,13 +5,14 @@ import axios from '../../axios/index'
 import { useParams } from 'react-router-dom';
 import { Modal, Input } from 'antd';
 import { IFullPost } from '../../Types';
+import { postsApi } from '../../store/Api/PostApi';
 
 interface IModalMessageProps {
-    setDataAction: (data:IFullPost) => void
+    postId: string | undefined,
 }
 
 
-const ModalMessage: React.FC<IModalMessageProps> = ({ setDataAction }) => {
+const ModalMessage: React.FC<IModalMessageProps> = ({ postId }) => {
 
 
     const [showModal, setShowModal] = React.useState<boolean>(true)
@@ -20,27 +21,17 @@ const ModalMessage: React.FC<IModalMessageProps> = ({ setDataAction }) => {
 
     const userId = useAppSelector(state => state.USER.data?._id)
 
-    const { id } = useParams();
 
     const onEmojiClick = ({ emoji }: any) => setMessage(`${message} ${emoji}`)
 
-
+    const [sendMessage] = postsApi.useSendCommentMutation()
 
     const onSubmitMessage = async () => {
         if (!message) {
             return alert('Напишите сообщение')
         }
-        await axios.patch(`/comment/post/${id}`, {
-            id: userId,
-            comment: message,
-        })
+        sendMessage({ postId: postId, user: userId, comment: message })
         setShowModal(false)
-        axios.get<IFullPost>(`/post/${id}`).then((res) => {
-            setDataAction(res.data);
-        }).catch((err) => {
-            console.warn(err),
-                alert('error')
-        })
     }
 
     return (

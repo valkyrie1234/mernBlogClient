@@ -34,6 +34,7 @@ const SearchedPostsList: React.FC<ISearchedPostList> = ({ isPopular }) => {
                         tags={el.tags}
                         user={el.user}
                         editable={data?._id === el.user._id}
+                        postComment={el.postComment}
                     />
                 )))
             }

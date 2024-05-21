@@ -14,6 +14,7 @@ import { useAppDispatch } from '../store/Hooks/useDispatch';
 import { fetchCurrentPost } from '../store/slices/posts';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { MemoizedMyHeader } from '../components/Header/MyHeader';
+import { postsApi } from '../store/Api/PostApi';
 
 
 
@@ -24,40 +25,25 @@ const { Title, Text } = Typography;
 
 const FullPost: React.FC = () => {
 
-
     const [showModal, setShowModal] = React.useState<boolean>(false)
     const isAuth = useAppSelector(selectIsAuth)
 
-    const dispatch = useAppDispatch()
 
-    const [postData, setPostData] = React.useState<IFullPost>()
-    const isLoading = useAppSelector((state) => state.POSTS.posts.isCurrentPostLoading)
 
     const [showComment, setShowComment] = React.useState<boolean>(false)
 
     const { id } = useParams();
-
+    const { data: currentPost, isLoading } = postsApi.useGetCurrentPostQuery(id)
 
     const changeVisibleMiodal = () => {
         setShowModal(prev => !prev)
     }
 
-    console.log(postData);
+    console.log(id)
+    console.log(currentPost)
 
-    React.useEffect(() => {
-        if (!id) {
-            return;
-        }
 
-        dispatch(fetchCurrentPost(id))
-            .then(unwrapResult)
-            .then((res) => {
-                setPostData(res)
-            });
-
-    }, [])
-
-    if (!postData || isLoading) {
+    if (!currentPost || isLoading) {
         console.log('skelet')
         return <FullPostSkeleton />
     }
@@ -73,19 +59,19 @@ const FullPost: React.FC = () => {
             <Row>
                 <Col span={12} offset={6} style={{ marginTop: 10 }}>
                     <Card
-                        cover={<img style={{ height: '300px', objectFit: 'cover' }} src={postData?.imageUrl ? `http://localhost:4444${postData?.imageUrl}` : blueFon} />}
+                        cover={<img style={{ height: '300px', objectFit: 'cover' }} src={currentPost?.imageUrl ? `http://localhost:4444${currentPost?.imageUrl}` : blueFon} />}
                         hoverable
                     >
                         <Meta
-                            title={<Title level={3}>{postData.title}</Title>}
-                            description={<Title type='secondary' level={5}>{postData?.createdAt?.toString().slice(0, 10)}</Title>}
+                            title={<Title level={3}>{currentPost?.title}</Title>}
+                            description={<Title type='secondary' level={5}>{currentPost?.createdAt?.toString().slice(0, 10)}</Title>}
                         />
                         <Text copyable>
-                            <Markdown children={postData.text} />
+                            <Markdown children={currentPost?.text} />
                         </Text>
                         <Divider />
                         <p>
-                            views:{postData.viewsCount}
+                            views:{currentPost?.viewsCount}
                         </p>
                         likes: 100
                         <Title level={4}>
@@ -94,7 +80,7 @@ const FullPost: React.FC = () => {
                         <Image.PreviewGroup>
                             <Row gutter={[8, 10]} style={{ marginTop: 20 }}>
                                 {
-                                    postData.postImage?.map((el) => (
+                                    currentPost?.postImage?.map((el) => (
                                         <Col span={4}>
                                             <Image src={el} />
                                         </Col>
@@ -105,14 +91,14 @@ const FullPost: React.FC = () => {
 
                         <Col span={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
-                            <Badge style={{ marginTop: 17, marginRight: 3 }} count={!postData.postComment?.length ? 0 : postData.postComment?.length}>
+                            <Badge style={{ marginTop: 17, marginRight: 3 }} count={!currentPost?.postComment?.length ? 0 : currentPost?.postComment?.length}>
 
                                 <Avatar style={{ marginTop: 10 }} onClick={showCommentHandler} size={44} alt='Всего комментариев' icon={<MessageOutlined />} />
 
                             </Badge>
 
                             {isAuth ? (<Button type='link' onClick={() => changeVisibleMiodal()}> send comment </Button>) : ''}
-                            {showModal ? <ModalMessage setDataAction={setPostData} /> : ''}
+                            {showModal ? <ModalMessage postId={ id }  /> : ''}
                         </Col>
 
                     </Card>
@@ -121,7 +107,7 @@ const FullPost: React.FC = () => {
                         !showComment ?
                             ''
                             :
-                            postData.postComment?.map((el) => (
+                            currentPost?.postComment?.map((el) => (
                                 <Comments key={el._id} style={{ marginTop: 10 }} user={el.user} comment={el.comment} />
                             ))
                     }

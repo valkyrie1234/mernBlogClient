@@ -102,9 +102,11 @@ const CreatePost: React.FC = () => {
         //     console.log(error)
         // }
 
+        
+
         navigate(`/`)
         createPost(fields)
-
+        
     }
 
 

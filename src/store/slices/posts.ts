@@ -82,10 +82,10 @@ const postsSlice = createSlice({
                 state.posts.isLoading = false;
             }),
             ///////////// delete post
-            builder.addCase(deletePost.pending, (state: RootState["POSTS"], action: any) => {
-                state.posts.items = state.posts.items.filter((post: any) => post._id !== action.meta.arg);
-                state.posts.searchedPosts = state.posts.items.filter((post: any) => post._id !== action.meta.arg);
-            }),
+            // builder.addCase(deletePost.pending, (state: RootState["POSTS"], action: any) => {
+            //     state.posts.items = state.posts.items.filter((post: any) => post._id !== action.meta.arg);
+            //     state.posts.searchedPosts = state.posts.items.filter((post: any) => post._id !== action.meta.arg);
+            // }),
             //////////////currentPost
             builder.addCase(fetchCurrentPost.pending, (state: RootState["POSTS"]) => {
                 state.posts.isCurrentPostLoading = true
