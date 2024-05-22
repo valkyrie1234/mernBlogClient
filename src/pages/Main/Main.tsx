@@ -27,11 +27,7 @@ const Main = () => {
         return '#' + Math.floor(Math.random() * 16777215).toString(16);
     }, [lastFiveTags])
 
-    // React.useEffect(() => {
-    //     dispatch(fetchPosts())
-    //     // dispatch(fetchPopularPosts())
-    //     dispatch(fetchLastFiveTags())
-    // }, [])
+
 
 
     return (

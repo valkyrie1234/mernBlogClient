@@ -5,8 +5,9 @@ import { Row, Col, Card, Button, Image, Typography, Modal, Input } from 'antd';
 import { useAppSelector } from '../../store/Hooks/useSelector';
 import { UserOutlined } from '@ant-design/icons'
 import { useAppDispatch } from '../../store/Hooks/useDispatch';
-import { fecethUpdatedUserData } from '../../store/slices/auth';
+// import { fecethUpdatedUserData } from '../../store/slices/auth';
 import { MemoizedMyHeader } from '../../components/Header/MyHeader';
+import { userApi } from '../../store/Api/UserApi';
 const { Title } = Typography;
 
 
@@ -16,13 +17,23 @@ const ProfilePage: React.FC = () => {
     const [newName, setNewName] = React.useState<string>('');
     const [newEmail, setNewEmail] = React.useState<string>('');
     const [visibilityModal, setVisibilityModal] = React.useState<boolean>(false)
-    const user = useAppSelector((state) => state.USER.data)
-    const navigate = useNavigate();
-    console.log(user)
-    const inputAvatarRef = React.useRef<HTMLInputElement>(null)
-    const dispatch = useAppDispatch()
-    const { id } = useParams()
 
+    const navigate = useNavigate();
+
+    const { data: userData } = userApi.useGetMeQuery()
+
+    const inputAvatarRef = React.useRef<HTMLInputElement>(null)
+
+    const { id } = useParams()
+    const [updateUserData] = userApi.useUpdateUserDataMutation()
+    console.log(id)
+
+    const data = {
+        _id: id,
+        email: newEmail ? newEmail : userData?.email,
+        avatarUrl: newAvatarUrl ? newAvatarUrl : userData?.avatarUrl,
+        fullName: newName ? newName : userData?.fullName
+    }
 
     const handleChangeAvatar = async (event: any) => {
         try {
@@ -61,20 +72,11 @@ const ProfilePage: React.FC = () => {
         setNewEmail(e.target.value)
     }
 
-    const onSubmit = async () => {
-        const newData = {
-            _id: id,
-            data: {
-                email: newEmail ? newEmail : user?.email,
-                avatarUrl: newAvatarUrl ? newAvatarUrl : user?.avatarUrl,
-                fullName: newName ? newName : user?.fullName
-            }
-        }
-        dispatch(fecethUpdatedUserData(newData))
+    const onSubmit =  () => {
+        updateUserData(data)
         navigate('/')
     }
 
-    console.log(id)
 
     return (
         <div>
@@ -91,7 +93,7 @@ const ProfilePage: React.FC = () => {
                             <Image
                                 height={100}
                                 style={{ objectFit: "cover" }}
-                                src={`http://localhost:4444${user?.avatarUrl}`}
+                                src={`http://localhost:4444${userData?.avatarUrl}`}
                             />
                         }
 
@@ -124,7 +126,7 @@ const ProfilePage: React.FC = () => {
                             <Title level={4}>
                                 Имя: {
                                     newName ? newName :
-                                        user?.fullName
+                                    userData?.fullName
                                 }
                             </Title>
                             <Button
@@ -139,7 +141,7 @@ const ProfilePage: React.FC = () => {
                             <Title level={4}>
                                 Email: {
                                     newEmail ? newEmail
-                                        : user?.email
+                                        : userData?.email
                                 }
                             </Title>
                         </Col>
@@ -151,7 +153,7 @@ const ProfilePage: React.FC = () => {
                             <Input
                                 prefix={<UserOutlined />}
                                 type="text"
-                                placeholder={user?.fullName}
+                                placeholder={userData?.fullName}
                                 style={{ marginTop: 30 }}
                                 value={newName}
                                 onChange={onChangeName}
@@ -159,7 +161,7 @@ const ProfilePage: React.FC = () => {
                             <Input
                                 prefix={<UserOutlined />}
                                 type="text"
-                                placeholder={user?.email}
+                                placeholder={userData?.email}
                                 style={{ marginTop: 30 }}
                                 value={newEmail}
                                 onChange={onChangeEmail}

@@ -7,6 +7,7 @@ import { useAppSelector } from '../../store/Hooks/useSelector';
 import { logout, selectIsAuth } from '../../store/slices/auth';
 import { useAppDispatch } from '../../store/Hooks/useDispatch';
 import { Paths } from '../../consts/consts';
+import { userApi } from '../../store/Api/UserApi';
 
 
 
@@ -16,9 +17,11 @@ const MyHeader: React.FC = () => {
 
     const dispatch = useAppDispatch()
     const isAuth = useAppSelector(selectIsAuth)
-    const data = useAppSelector(state => state.USER.data)
+    // const data = useAppSelector(state => state.USER.data)
 
+    const { data: userData } = userApi.useGetMeQuery()
 
+    console.log(userData)
 
     const onClicklogout = (): void => {
         if (window.confirm('are you sure?')) {
@@ -26,7 +29,7 @@ const MyHeader: React.FC = () => {
         }
     }
 
-    console.log(data)
+    // console.log(data)
 
     return (
         <Row align={'middle'} style={{ height: 70, background: '#222222' }}>
@@ -51,12 +54,12 @@ const MyHeader: React.FC = () => {
                             </Col>
                             <Col span={12} style={{ display: 'flex', justifyContent: 'end', gap: '12px', alignItems: 'center' }}>
                                 {
-                                    data?.avatarUrl ? (<Avatar size={48} src={`http://localhost:4444${data?.avatarUrl}`} />)
+                                    userData?.avatarUrl ? (<Avatar size={48} src={`http://localhost:4444${userData?.avatarUrl}`} />)
                                         : (<Avatar size={48} icon={<UserOutlined />} />)
                                 }
                                 <div style={{ color: 'white' }}>
-                                    <Link style={{ color: 'white' }} to={`/profile/${data?._id}`}>{data?.email}</Link>
-                                    <p>{data?.fullName}</p>
+                                    <Link style={{ color: 'white' }} to={`/profile/${userData?._id}`}>{userData?.email}</Link>
+                                    <p>{userData?.fullName}</p>
                                 </div>
                                 <Button style={{ borderRadius: '0px' }} type='primary'><Link to={Paths.CreatePost}>Создать пост</Link></Button>
                                 <Button danger style={{ borderRadius: '0px' }} onClick={() => onClicklogout()} type='primary'><Link to={Paths.Main}>Выйти</Link></Button>

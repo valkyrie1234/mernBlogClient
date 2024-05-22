@@ -13,7 +13,7 @@ export const postsApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: BaseUrl.url,
     }),
-    tagTypes: ['Posts', 'CurrentPost'],
+    tagTypes: ['Posts', 'CurrentPost', 'User'],
     endpoints: (builder) => ({
         getAllPosts: builder.query<IPostCard[], void>({
             query: () => ({

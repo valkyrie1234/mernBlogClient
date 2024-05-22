@@ -19,7 +19,8 @@ export const Paths = {
 } as const 
 
 export const Api = {
-    PostsApi: 'PostsApi'
+    PostsApi: 'PostsApi',
+    UserApi: 'UserApi'
 } as const 
 
 export const BaseUrl = {
