@@ -36,10 +36,10 @@ export const fetchUserReg = createAsyncThunk('auth/fetchUserReg', async (params:
     return data;
 })
 
-export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async () => {
-    const { data } = await axios.get('/auth/me');
-    return data;
-})
+// export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async () => {
+//     const { data } = await axios.get('/auth/me');
+//     return data;
+// })
 
 export const fecethUpdatedUserData = createAsyncThunk<IUserSliceType, IUserUpdateDataType, ICreateAsyncThunkType>('auth/fecethUpdatedUserData',
     async (params: IUserUpdateDataType) => {
@@ -71,18 +71,18 @@ const authSlice = createSlice({
                 state.status = 'error'
                 state.data = null;
             }),
-            builder.addCase(fetchAuthMe.pending, (state: RootState["USER"]) => {
-                state.status = 'loading'
-                state.data = null;
-            }),
-            builder.addCase(fetchAuthMe.fulfilled, (state: RootState["USER"], action: any) => {
-                state.data = action.payload
-                state.status = 'success';
-            }),
-            builder.addCase(fetchAuthMe.rejected, (state: RootState["USER"]) => {
-                state.status = 'error'
-                state.data = null;
-            }),
+            // builder.addCase(fetchAuthMe.pending, (state: RootState["USER"]) => {
+            //     state.status = 'loading'
+            //     state.data = null;
+            // }),
+            // builder.addCase(fetchAuthMe.fulfilled, (state: RootState["USER"], action: any) => {
+            //     state.data = action.payload
+            //     state.status = 'success';
+            // }),
+            // builder.addCase(fetchAuthMe.rejected, (state: RootState["USER"]) => {
+            //     state.status = 'error'
+            //     state.data = null;
+            // }),
             builder.addCase(fetchUserReg.pending, (state: RootState["USER"]) => {
                 state.status = 'loading'
                 state.data = null;

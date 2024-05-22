@@ -1,8 +1,6 @@
 import React from 'react';
 import SideBar from '../../components/SideBar/SideBar';
-import { useAppDispatch } from '../../store/Hooks/useDispatch';
 import { Row } from 'antd';
-import { fetchLastFiveTags, fetchPosts } from '../../store/slices/posts';
 import { useAppSelector } from '../../store/Hooks/useSelector';
 import { MemoizedMyHeader } from '../../components/Header/MyHeader';
 import FilterBar from '../../components/FilterBar/FilterBar';
@@ -13,7 +11,7 @@ import { postsApi } from '../../store/Api/PostApi';
 
 const Main = () => {
     const [isPopular, setIsPopular] = React.useState(false)
-    const dispatch = useAppDispatch();
+
     const { data: posts, error, isLoading: isPostsLoading } = postsApi.useGetAllPostsQuery()
 
     console.log(posts, error)

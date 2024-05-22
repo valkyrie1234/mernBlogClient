@@ -3,8 +3,6 @@ import { Typography, Avatar, Card, Row, Col, Tag, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { EyeFilled, CommentOutlined, DeleteOutlined, EditOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { IPostCard } from './../../Types/index';
-import { useAppDispatch } from '../../store/Hooks/useDispatch';
-import { deletePost } from '../../store/slices/posts';
 import blueFon from '../../assets/blue_fon.jpg'
 import { postsApi } from '../../store/Api/PostApi';
 

@@ -33,7 +33,7 @@ export const postsApi = createApi({
             }),
             providesTags: ['Posts'],
         }),
-        getCurrentPost: builder.query<IFullPost, string>({
+        getCurrentPost: builder.query<IFullPost, string | undefined>({
             query: (id) => ({
                 url: `${Endpoints.currentPost}${id}`
             }),

@@ -90,23 +90,8 @@ const CreatePost: React.FC = () => {
             imageUrl,
             tags,
         }
-
-        //     const { data } = isEditing
-        //         ? await axios.patch(`/post/${id}`, fields)
-        //         : await axios.post('/post', fields);
-
-        //     const _id = isEditing ? id : data._id;
-        //     navigate(`/post/${_id}`)
-
-        // } catch (error) {
-        //     console.log(error)
-        // }
-
-        
-
         navigate(`/`)
         createPost(fields)
-        
     }
 
 

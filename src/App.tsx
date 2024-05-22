@@ -11,6 +11,7 @@ import { AnimatePresence } from 'framer-motion';
 import { Paths } from './consts/consts';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import LoadingPage from './pages/LoadingPage/LoadingPage';
+import { userApi } from './store/Api/UserApi';
 
 const ProfilePage = React.lazy(() => import('./pages/ProfilePage/ProgilePage'))
 const CreatePost = React.lazy(() => import('./pages/CreatePost/CreatePost'))
@@ -19,9 +20,7 @@ const App: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  React.useEffect(() => {
-    dispatch(fetchAuthMe())
-  }, [])
+  const { data: userData } = userApi.useGetMeQuery()
 
 
   return (
@@ -29,13 +28,13 @@ const App: React.FC = () => {
       <AnimatePresence>
         <Routes>
           <Route path={Paths.Main} element={<Main />} />
-          <Route path={Paths.CreatePost} element={<React.Suspense fallback={<LoadingPage/>}> <CreatePost /></React.Suspense>} />
-          <Route path={Paths.EditPost} element={<React.Suspense fallback={<LoadingPage/>}> <CreatePost /></React.Suspense>} />
+          <Route path={Paths.CreatePost} element={<React.Suspense fallback={<LoadingPage />}> <CreatePost /></React.Suspense>} />
+          <Route path={Paths.EditPost} element={<React.Suspense fallback={<LoadingPage />}> <CreatePost /></React.Suspense>} />
           <Route path={Paths.Login} element={<Login />} />
           <Route path={Paths.Registration} element={<Registartion />} />
           <Route path={Paths.CurrentPost} element={<FullPost />} />
-          <Route path={Paths.UserProfile} element={<React.Suspense fallback={<LoadingPage/>}> <ProfilePage /></React.Suspense>} />
-          <Route path={Paths.Error} element={<ErrorPage/>} />
+          <Route path={Paths.UserProfile} element={<React.Suspense fallback={<LoadingPage />}> <ProfilePage /></React.Suspense>} />
+          <Route path={Paths.Error} element={<ErrorPage />} />
         </Routes>
       </AnimatePresence>
     </>

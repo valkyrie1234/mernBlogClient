@@ -4,15 +4,11 @@ import { Row, Col, Card, Typography, Image, Divider, Badge, Avatar, Button } fro
 import Markdown from 'react-markdown';
 import { MessageOutlined } from '@ant-design/icons'
 import Comments from '../components/Comments/Comments';
-import { IFullPost } from '../Types/index';
 import FullPostSkeleton from './FullPostSkeleton';
 import blueFon from '../assets/blue_fon.jpg'
 import { useAppSelector } from '../store/Hooks/useSelector';
 import { selectIsAuth } from '../store/slices/auth';
 import ModalMessage from '../components/ModalMessage/ModalMessage';
-import { useAppDispatch } from '../store/Hooks/useDispatch';
-import { fetchCurrentPost } from '../store/slices/posts';
-import { unwrapResult } from '@reduxjs/toolkit';
 import { MemoizedMyHeader } from '../components/Header/MyHeader';
 import { postsApi } from '../store/Api/PostApi';
 
