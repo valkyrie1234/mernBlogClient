@@ -1,11 +1,9 @@
 import React from 'react'
 import { useAppDispatch } from '../../store/Hooks/useDispatch';
-import { useAppSelector } from '../../store/Hooks/useSelector';
 import useDebounce from '../../customHooks/useDebounce';
-import { Row, Col, Button, Skeleton, Input, Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons'
-import { fetchSearchedPosts } from '../../store/slices/posts';
-import { postsApi } from '../../store/Api/PostApi';
+import { Row, Col, Button, Skeleton, Input } from 'antd';
+import { searched } from '../../store/slices/searchValue';
+
 
 
 
@@ -18,10 +16,10 @@ const FilterBar: React.FC<IFilterBar> = ({ isPostsLoading, setIsPopular }) => {
 
     const [search, setSearch] = React.useState<string>('')
 
-    const isSearchedPostsloading = useAppSelector((state) => state.POSTS.posts.isSearchedPostsLoading)
+    // const isSearchedPostsloading = useAppSelector((state) => state.POSTS.posts.isSearchedPostsLoading)
     const dispatch = useAppDispatch()
 
-    // const { data: searchedPosts, isLoading: isSearchedPostsLoading } = postsApi.useGetSearchedPostsQuery(search)
+    // const { data: searchedPosts } = postsApi.useGetSearchedPostsQuery(search)
 
     const debouncedSearch = useDebounce(search, 1000)
 
@@ -30,9 +28,7 @@ const FilterBar: React.FC<IFilterBar> = ({ isPostsLoading, setIsPopular }) => {
 
 
     React.useEffect(() => {
-        // console.log('12')
-        dispatch(fetchSearchedPosts(debouncedSearch.trim()))
-        
+        dispatch(searched(debouncedSearch))
     }, [debouncedSearch])
 
     const showPopular = (): void => {
@@ -63,9 +59,9 @@ const FilterBar: React.FC<IFilterBar> = ({ isPostsLoading, setIsPopular }) => {
                                 style={{ borderRadius: 0, border: 0 }}
                                 onChange={onChangeHandler}
                             />
-                            {
+                            {/* {
                                 isSearchedPostsloading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 20, marginLeft: -40 }} spin />} /> : ''
-                            }
+                            } */}
                         </div>
                         <Button style={{ borderRadius: 0, border: '0px' }} onClick={showAll}>all</Button>
                         <Button style={{ borderRadius: 0, border: '0px', borderLeft: '1px solid gray' }} onClick={showPopular}>popular</Button>

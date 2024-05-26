@@ -13,7 +13,7 @@ export const TagsPage: React.FC = () => {
 
     const { tag } = useParams()
 
-    const { data } = tagsApi.useGetPostsByTagsQuery(tag)
+    const { data } = tagsApi.useGetPostsByTagsQuery(tag?.trim())
 
     console.log(data)
 

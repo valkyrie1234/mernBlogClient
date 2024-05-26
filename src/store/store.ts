@@ -1,16 +1,13 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { postsReduser } from "./slices/posts";
-import { authReducer } from "./slices/auth";
+import { searchReducer } from "./slices/searchValue";
 import { NameSpace } from "../consts/consts";
 import { postsApi } from "./Api/PostApi";
 import { userApi } from "./Api/UserApi";
 
 
 const rootReducer = combineReducers({
-    [NameSpace.Posts]:postsReduser,
-    [NameSpace.User]:authReducer,
+    [NameSpace.Search]:searchReducer,
     [postsApi.reducerPath]: postsApi.reducer,
-    [userApi.reducerPath]: userApi.reducer,
 })
 
 const store = configureStore({

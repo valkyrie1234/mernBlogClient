@@ -1,19 +1,16 @@
 import React from 'react'
 import { Col } from 'antd';
-import { IPostCard } from '../../Types';
-import SearchedPostsList from '../SearchedPostsList/SearchedPostsList';
-import PopularPostList from '../PopularPostsList/PopularPostsList';
-import List from '../List/List';
 import { postsApi } from '../../store/Api/PostApi';
 import PostCard from '../Card/PostCard';
 import { userApi } from '../../store/Api/UserApi';
+import { useAppSelector } from '../../store/Hooks/useSelector';
+
 
 
 
 export interface IPostlistProps {
     isPostsLoading: boolean,
     isPopular: boolean,
-    searchedPosts: Array<IPostCard>,
 }
 
 
@@ -22,9 +19,8 @@ const PostsList: React.FC<IPostlistProps> = ({ isPopular }) => {
     const { data: user } = userApi.useGetMeQuery()
     const { data: posts, isLoading } = postsApi.useGetAllPostsQuery()
     const { data: popularPosts, isLoading: isPopularLoading } = postsApi.useGetPopularPostsQuery()
-
-
-    console.log(isPopular)
+    const searchedValue = useAppSelector((state) => state.SEARCH.search)
+    const {data:searchedPosts} = postsApi.useGetSearchedPostsQuery(searchedValue)
 
     return (
         <Col span={8} offset={6}>

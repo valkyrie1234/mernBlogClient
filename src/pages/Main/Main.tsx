@@ -17,13 +17,13 @@ const Main = () => {
     console.log(posts, error)
 
     // const isPostsLoading = useAppSelector((state) => state.POSTS.posts.isLoading)
-    const searchedPosts = useAppSelector((state) => state.POSTS.posts.searchedPosts)
-    const lastFiveTags = useAppSelector((state) => state.POSTS.posts.lastFiveTags)
+    // const searchedPosts = useAppSelector((state) => state.POSTS.posts.searchedPosts)
+    // const lastFiveTags = useAppSelector((state) => state.POSTS.posts.lastFiveTags)
     //Вынести состояния в дочерние компоненты, чтобы не было лишних ререндеров 
 
-    const useCallbackcolorTags = React.useCallback((): string => {
-        return '#' + Math.floor(Math.random() * 16777215).toString(16);
-    }, [lastFiveTags])
+    // const useCallbackcolorTags = React.useCallback((): string => {
+    //     return '#' + Math.floor(Math.random() * 16777215).toString(16);
+    // }, [lastFiveTags])
 
 
 
@@ -33,8 +33,8 @@ const Main = () => {
             <MemoizedMyHeader />
             <FilterBar isPostsLoading={isPostsLoading} setIsPopular={setIsPopular} />
             <Row>
-                <PostsList isPostsLoading={isPostsLoading} isPopular={isPopular} searchedPosts={searchedPosts} />
-                <SideBar useCallbackcolorTags={useCallbackcolorTags} isPostsLoading={isPostsLoading} tags={lastFiveTags} style={{ marginTop: '10px', position: 'sticky', top: 10, alignSelf: 'start' }} />
+                <PostsList isPostsLoading={isPostsLoading} isPopular={isPopular}  />
+                <SideBar  isPostsLoading={isPostsLoading}  style={{ marginTop: '10px', position: 'sticky', top: 10, alignSelf: 'start' }} />
             </Row>
         </div>
 

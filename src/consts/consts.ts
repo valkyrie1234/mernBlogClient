@@ -1,7 +1,7 @@
 
 
 export const NameSpace = {
-    Posts: "POSTS",
+    Search: "SEARCH",
     User: "USER",
     Loaders: "LOADERS"
 } as const

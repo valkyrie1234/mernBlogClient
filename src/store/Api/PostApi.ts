@@ -29,7 +29,7 @@ export const postsApi = createApi({
         }),
         getSearchedPosts: builder.query<IPostCard[], string>({
             query: (title) => ({
-                url: `${Endpoints.serachedPosts} + ${title}`
+                url: `${Endpoints.serachedPosts}${title}`
             }),
             providesTags: ['Posts'],
         }),
@@ -54,7 +54,7 @@ export const postsApi = createApi({
             invalidatesTags: ['CurrentPost'],
         }),
         deletePost: builder.mutation({
-            query: (id: any) => ({
+            query: (id: string) => ({
                 url: `/post/${id}`,
                 method: 'DELETE',
                 headers: {

@@ -12,7 +12,7 @@ export const tagsApi = postsApi.injectEndpoints({
         }),
         getPostsByTags: builder.query<Array<IPostCard>, string | undefined>({
             query: (tag) => ({
-                url: Endpoints.postsByTags + tag
+                url: Endpoints.postsByTags + tag?.trim()
             }),
             providesTags: ['Posts']
         }),

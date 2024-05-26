@@ -5,12 +5,11 @@ import Markdown from 'react-markdown';
 import { MessageOutlined } from '@ant-design/icons'
 import Comments from '../components/Comments/Comments';
 import FullPostSkeleton from './FullPostSkeleton';
-import blueFon from '../assets/blue_fon.jpg'
-import { useAppSelector } from '../store/Hooks/useSelector';
-import { selectIsAuth } from '../store/slices/auth';
+import blueFon from '../assets/blue_fon.jpg';
 import ModalMessage from '../components/ModalMessage/ModalMessage';
 import { MemoizedMyHeader } from '../components/Header/MyHeader';
 import { postsApi } from '../store/Api/PostApi';
+import { userApi } from '../store/Api/UserApi';
 
 
 
@@ -22,10 +21,9 @@ const { Title, Text } = Typography;
 const FullPost: React.FC = () => {
 
     const [showModal, setShowModal] = React.useState<boolean>(false)
-    const isAuth = useAppSelector(selectIsAuth)
 
 
-
+    const {data: isAuth} = userApi.useGetMeQuery()
     const [showComment, setShowComment] = React.useState<boolean>(false)
 
     const { id } = useParams();

@@ -4,13 +4,13 @@ import { SideBarProps } from '../../Types';
 import SideBarSkeleton from './SideBarSkeleton';
 import { tagsApi } from '../../store/Api/TagsApi';
 import { Link } from 'react-router-dom';
-import { Paths } from '../../consts/consts';
+
 
 const { Title } = Typography
 
 
 
-const SideBar: React.FC<SideBarProps> = React.memo(({ style, isPostsLoading, useCallbackcolorTags }) => {
+const SideBar: React.FC<SideBarProps> = React.memo(({ style, isPostsLoading}) => {
 
     const { data: tags } = tagsApi.useGetAlltagsQuery()
 
@@ -27,7 +27,7 @@ const SideBar: React.FC<SideBarProps> = React.memo(({ style, isPostsLoading, use
                             renderItem={(tag: any) => (
                                 <List.Item>
                                     <Link to={`/tags/${tag}`}>
-                                        <Tag color={useCallbackcolorTags()}>#{tag}</Tag>
+                                        <Tag>#{tag}</Tag>
                                     </Link>
                                 </List.Item>
                             )}

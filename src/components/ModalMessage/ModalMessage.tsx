@@ -1,11 +1,8 @@
 import React from 'react'
 import EmojiPicker from 'emoji-picker-react';
-import { useAppSelector } from '../../store/Hooks/useSelector';
-import axios from '../../axios/index'
-import { useParams } from 'react-router-dom';
 import { Modal, Input } from 'antd';
-import { IFullPost } from '../../Types';
 import { postsApi } from '../../store/Api/PostApi';
+import { userApi } from '../../store/Api/UserApi';
 
 interface IModalMessageProps {
     postId: string | undefined,
@@ -19,8 +16,7 @@ const ModalMessage: React.FC<IModalMessageProps> = ({ postId }) => {
     const [message, setMessage] = React.useState<string>('')
     const [openEmoji, setOpenEmoji] = React.useState<boolean>(false)
 
-    const userId = useAppSelector(state => state.USER.data?._id)
-
+    const {data} = userApi.useGetMeQuery()
 
     const onEmojiClick = ({ emoji }: any) => setMessage(`${message} ${emoji}`)
 
@@ -30,7 +26,7 @@ const ModalMessage: React.FC<IModalMessageProps> = ({ postId }) => {
         if (!message) {
             return alert('Напишите сообщение')
         }
-        sendMessage({ postId: postId, user: userId, comment: message })
+        sendMessage({ postId: postId, user: data._id, comment: message })
         setShowModal(false)
     }
 

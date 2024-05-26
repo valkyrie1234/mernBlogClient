@@ -1,6 +1,5 @@
 import React from 'react';
 import { Col } from 'antd';
-import { useAppSelector } from '../../store/Hooks/useSelector';
 import PostCard from '../Card/PostCard';
 import { IPostCard } from '../../Types';
 import PostCardSkeleton from '../Card/PostCardSkeleton';
@@ -13,15 +12,13 @@ export interface ISearchedPostList {
 
 const List: React.FC<ISearchedPostList> = ({ isPostsLoading }) => {
 
-    const posts = useAppSelector((state) => state.POSTS.posts.items)
-    const data = useAppSelector(state => state.USER.data)
 
     console.log(111)
 
 
     return (
         <Col>
-            {
+            {/* {
                 posts.map((el: IPostCard, i: number) => isPostsLoading ? (
                     <PostCardSkeleton key={i} />
                 ) : (
@@ -39,7 +36,7 @@ const List: React.FC<ISearchedPostList> = ({ isPostsLoading }) => {
                         postComment={el.postComment}
                     />
                 ))
-            }
+            } */}
         </Col>
     );
 }
