@@ -41,11 +41,11 @@ export const fetchUserReg = createAsyncThunk('auth/fetchUserReg', async (params:
 //     return data;
 // })
 
-export const fecethUpdatedUserData = createAsyncThunk<IUserSliceType, IUserUpdateDataType, ICreateAsyncThunkType>('auth/fecethUpdatedUserData',
-    async (params: IUserUpdateDataType) => {
-        const { data } = await axios.patch(`/profile/user/${params._id}`, params.data)
-        return data
-    })
+// export const fecethUpdatedUserData = createAsyncThunk<IUserSliceType, IUserUpdateDataType, ICreateAsyncThunkType>('auth/fecethUpdatedUserData',
+//     async (params: IUserUpdateDataType) => {
+//         const { data } = await axios.patch(`/profile/user/${params._id}`, params.data)
+//         return data
+//     })
 
 const authSlice = createSlice({
     name: NameSpace.User,
@@ -96,21 +96,20 @@ const authSlice = createSlice({
                 state.status = 'error'
                 state.data = null;
             })////////////////updateData
-            ,
-            builder.addCase(fecethUpdatedUserData.pending, (state: RootState["USER"]) => {
-                state.status = 'loading'
-                state.data = null;
-            })
-            ,
-            builder.addCase(fecethUpdatedUserData.fulfilled, (state: RootState["USER"], action: any) => {
-                state.status = 'success'
-                state.data = action.payload;
-            }),
-            builder.addCase(fecethUpdatedUserData.rejected, (state: RootState["USER"]) => {
-                state.status = 'error'
-                state.data = null;
-            })
-    },
+    //         builder.addCase(fecethUpdatedUserData.pending, (state: RootState["USER"]) => {
+    //             state.status = 'loading'
+    //             state.data = null;
+    //         })
+    //         ,
+    //         builder.addCase(fecethUpdatedUserData.fulfilled, (state: RootState["USER"], action: any) => {
+    //             state.status = 'success'
+    //             state.data = action.payload;
+    //         }),
+    //         builder.addCase(fecethUpdatedUserData.rejected, (state: RootState["USER"]) => {
+    //             state.status = 'error'
+    //             state.data = null;
+    //         })
+     },
 });
 
 

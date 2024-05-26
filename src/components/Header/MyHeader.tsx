@@ -3,8 +3,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Col, Row, Avatar } from "antd";
 import { AlertOutlined, UserOutlined } from '@ant-design/icons';
-import { useAppSelector } from '../../store/Hooks/useSelector';
-import { logout, selectIsAuth } from '../../store/slices/auth';
 import { useAppDispatch } from '../../store/Hooks/useDispatch';
 import { Paths } from '../../consts/consts';
 import { userApi } from '../../store/Api/UserApi';
@@ -16,8 +14,6 @@ import { userApi } from '../../store/Api/UserApi';
 const MyHeader: React.FC = () => {
 
     const dispatch = useAppDispatch()
-    const isAuth = useAppSelector(selectIsAuth)
-    // const data = useAppSelector(state => state.USER.data)
 
     const { data: userData } = userApi.useGetMeQuery()
 
@@ -25,7 +21,8 @@ const MyHeader: React.FC = () => {
 
     const onClicklogout = (): void => {
         if (window.confirm('are you sure?')) {
-            dispatch(logout())
+            window.localStorage.removeItem('token');
+            dispatch(userApi.util.resetApiState());
         }
     }
 
@@ -36,7 +33,7 @@ const MyHeader: React.FC = () => {
             <Col offset={6} span={12}>
 
                 {
-                    !isAuth
+                    !userData
                         ?
                         (<Row justify={'space-between'} align={'middle'}>
                             <Col span={12}>

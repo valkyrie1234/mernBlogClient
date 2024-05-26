@@ -4,7 +4,7 @@ export interface IPostCard {
     title: string, 
     viewsCount: number,
     createdAt: Date,
-    tags?: Array<string>,
+    tags: Array<string>,
     imageUrl?: string,
     style?: Object,
     postImage?: Array<string>
@@ -13,7 +13,7 @@ export interface IPostCard {
         fullName: string,
         avatarUrl?: string,
         email?: string,
-    },
+    } ,
     postComment?: Array<IPostComments>
 }
 

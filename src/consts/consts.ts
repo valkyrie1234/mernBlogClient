@@ -15,6 +15,7 @@ export const Paths = {
     Registration: '/registration',
     CurrentPost: '/post/:id',
     UserProfile: '/profile/:id',
+    TagsPage:'/tags/:tag',
     Error: '*'
 } as const 
 
@@ -31,5 +32,9 @@ export const Endpoints = {
     posts: '/post',
     popularPosts: '/post/popular',
     serachedPosts: '/post/search/',
-    currentPost: '/post/'
+    currentPost: '/post/',
+    registartion: '/auth/register',
+    login: '/auth/login',
+    lastFiveTags: '/tags',
+    postsByTags: '/post/postsBytags/'
 } as const

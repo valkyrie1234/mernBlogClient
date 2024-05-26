@@ -7,6 +7,8 @@ import { Row, Col, Card, Divider, Button, Form, Input, FormProps } from 'antd';
 import { IUserReg } from '../../Types';
 import PageTransition from '../../components/PageTransition/PageTransition';
 import {MemoizedMyHeader} from '../../components/Header/MyHeader';
+import { userApi } from '../../store/Api/UserApi';
+import { IUserSliceType } from '../../Types/UserType';
 
 
 
@@ -15,16 +17,18 @@ const Registartion: React.FC = () => {
 
 
 
-    const isAuth = useAppSelector(selectIsAuth)
-    const dispatch = useAppDispatch();
 
+    const [registartion] = userApi.useUserRegistartionMutation()
 
 
     const onFinish: FormProps<IUserReg>['onFinish'] = (values: IUserReg) => {
-        dispatch(fetchUserReg(values))
+        registartion(values).then((res) => {
+            window.localStorage.setItem('token', res.data.token)
+            console.log(res)
+        })
     };
 
-    if (isAuth) {
+    if (window.localStorage.getItem('token')) {
         return <Navigate to={'/'} />
     }
 

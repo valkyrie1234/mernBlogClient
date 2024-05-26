@@ -2,13 +2,17 @@ import React from 'react'
 import { Col, List, Tag, Typography } from 'antd';
 import { SideBarProps } from '../../Types';
 import SideBarSkeleton from './SideBarSkeleton';
+import { tagsApi } from '../../store/Api/TagsApi';
+import { Link } from 'react-router-dom';
+import { Paths } from '../../consts/consts';
 
 const { Title } = Typography
 
 
 
-const SideBar: React.FC<SideBarProps> = React.memo(({ style, tags, isPostsLoading, useCallbackcolorTags }) => {
+const SideBar: React.FC<SideBarProps> = React.memo(({ style, isPostsLoading, useCallbackcolorTags }) => {
 
+    const { data: tags } = tagsApi.useGetAlltagsQuery()
 
     return (
         <>
@@ -20,13 +24,17 @@ const SideBar: React.FC<SideBarProps> = React.memo(({ style, tags, isPostsLoadin
                             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', padding: 10 }}
                             bordered
                             dataSource={tags}
-                            renderItem={(tag) => (
+                            renderItem={(tag: any) => (
                                 <List.Item>
-                                    <Tag color={useCallbackcolorTags()}>#{tag}</Tag>
+                                    <Link to={`/tags/${tag}`}>
+                                        <Tag color={useCallbackcolorTags()}>#{tag}</Tag>
+                                    </Link>
                                 </List.Item>
                             )}
                         />
-                        <Title level={4}>Последние 5 уникальных тегов!!!</Title>
+                        <Col offset={4}>
+                            <Title level={4}>Поиск Статей по тегам</Title>
+                        </Col>
                     </Col>
             }
         </>

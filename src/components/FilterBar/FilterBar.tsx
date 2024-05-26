@@ -21,7 +21,8 @@ const FilterBar: React.FC<IFilterBar> = ({ isPostsLoading, setIsPopular }) => {
     const isSearchedPostsloading = useAppSelector((state) => state.POSTS.posts.isSearchedPostsLoading)
     const dispatch = useAppDispatch()
 
-    const [fetchPopularPosts] = postsApi.useLazyGetAllPostsQuery()
+    // const { data: searchedPosts, isLoading: isSearchedPostsLoading } = postsApi.useGetSearchedPostsQuery(search)
+
     const debouncedSearch = useDebounce(search, 1000)
 
 
@@ -36,7 +37,6 @@ const FilterBar: React.FC<IFilterBar> = ({ isPostsLoading, setIsPopular }) => {
 
     const showPopular = (): void => {
         setIsPopular(true)
-        fetchPopularPosts()
     }
     const showAll = (): void => {
         setIsPopular(false)

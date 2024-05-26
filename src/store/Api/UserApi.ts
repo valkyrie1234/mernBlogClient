@@ -1,5 +1,8 @@
+import { IUserReg } from '../../Types';
+import { IUserSliceType } from '../../Types/UserType';
+import { Endpoints } from '../../consts/consts';
 import { postsApi } from './PostApi';
-postsApi
+
 
 const useAuthToken = () => {
     const token = localStorage.getItem("token");
@@ -23,6 +26,29 @@ export const userApi = postsApi.injectEndpoints({
             }),
             invalidatesTags: ['Posts', 'User']
         }),
+        userRegistartion: builder.mutation< IUserSliceType, IUserReg>({
+            query: ({ email, password, fullName }) => ({
+                url: Endpoints.registartion,
+                method: 'POST',
+                body: {
+                    email: email,
+                    password: password,
+                    fullName: fullName
+                }
+            }),
+            invalidatesTags: ['Posts', 'User']
+        }),
+        userLogin: builder.mutation({
+            query: ({ email, password }) => ({
+                url: Endpoints.login,
+                method: 'POST',
+                body: {
+                    email: email,
+                    password: password,
+                }
+            }),
+            invalidatesTags: ['Posts', 'User']
+        }),
         getMe: builder.query<any, void>({
             query: () => ({
                 url: '/auth/me',
@@ -35,4 +61,4 @@ export const userApi = postsApi.injectEndpoints({
     })
 })
 
-export const { useUpdateUserDataMutation, useGetMeQuery } = userApi
+export const { useUpdateUserDataMutation, useGetMeQuery, useUserRegistartionMutation, useUserLoginMutation } = userApi
