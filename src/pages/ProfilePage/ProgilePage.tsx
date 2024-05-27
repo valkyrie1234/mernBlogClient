@@ -2,10 +2,7 @@ import React from 'react';
 import axios from '../../axios'
 import { useNavigate, useParams } from 'react-router-dom';
 import { Row, Col, Card, Button, Image, Typography, Modal, Input } from 'antd';
-import { useAppSelector } from '../../store/Hooks/useSelector';
 import { UserOutlined } from '@ant-design/icons'
-import { useAppDispatch } from '../../store/Hooks/useDispatch';
-// import { fecethUpdatedUserData } from '../../store/slices/auth';
 import { MemoizedMyHeader } from '../../components/Header/MyHeader';
 import { userApi } from '../../store/Api/UserApi';
 const { Title } = Typography;

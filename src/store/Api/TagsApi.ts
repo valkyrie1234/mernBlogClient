@@ -4,7 +4,7 @@ import { postsApi } from "./PostApi";
 
 export const tagsApi = postsApi.injectEndpoints({
     endpoints: (builder) => ({
-        getAlltags: builder.query<any, void>({
+        getAlltags: builder.query<Array<string>, void>({
             query: () => ({
                 url: Endpoints.lastFiveTags
             }),

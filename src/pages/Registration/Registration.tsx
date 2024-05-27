@@ -1,14 +1,11 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAppDispatch } from '../../store/Hooks/useDispatch';
-import { fetchUserReg, selectIsAuth } from '../../store/slices/auth';
-import { useAppSelector } from '../../store/Hooks/useSelector';
 import { Row, Col, Card, Divider, Button, Form, Input, FormProps } from 'antd';
 import { IUserReg } from '../../Types';
 import PageTransition from '../../components/PageTransition/PageTransition';
 import {MemoizedMyHeader} from '../../components/Header/MyHeader';
 import { userApi } from '../../store/Api/UserApi';
-import { IUserSliceType } from '../../Types/UserType';
+
 
 
 
@@ -25,7 +22,7 @@ const Registartion: React.FC = () => {
         registartion(values).then((res) => {
             window.localStorage.setItem('token', res.data.token)
             console.log(res)
-        })
+        }).catch((err) => console.log(err))
     };
 
     if (window.localStorage.getItem('token')) {

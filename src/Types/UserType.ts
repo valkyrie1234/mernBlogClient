@@ -29,3 +29,10 @@ export interface IUserUpdateDataType {
         avatarUrl?: string
     }
 }
+
+export interface IUserUpdateDataQueryType{
+    _id?: string,
+    email?: string,
+    avatarUrl?:string,
+    fullName?:string
+}

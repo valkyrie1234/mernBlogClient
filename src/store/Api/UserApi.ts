@@ -1,5 +1,5 @@
-import { IUserReg } from '../../Types';
-import { IUserSliceType } from '../../Types/UserType';
+import { IUserLogin, IUserReg } from '../../Types';
+import { IUserSliceType, IUserUpdateDataQueryType, IUserUpdateDataType } from '../../Types/UserType';
 import { Endpoints } from '../../consts/consts';
 import { postsApi } from './PostApi';
 
@@ -11,7 +11,7 @@ const useAuthToken = () => {
 
 export const userApi = postsApi.injectEndpoints({
     endpoints: (builder) => ({
-        updateUserData: builder.mutation({
+        updateUserData: builder.mutation<IUserUpdateDataType, IUserUpdateDataQueryType>({
             query: ({ _id, email, avatarUrl, fullName }) => ({
                 url: `/profile/user/${_id}`,
                 method: 'PATCH',
@@ -26,7 +26,7 @@ export const userApi = postsApi.injectEndpoints({
             }),
             invalidatesTags: ['Posts', 'User']
         }),
-        userRegistartion: builder.mutation< IUserSliceType, IUserReg>({
+        userRegistartion: builder.mutation<IUserSliceType, IUserReg>({
             query: ({ email, password, fullName }) => ({
                 url: Endpoints.registartion,
                 method: 'POST',
@@ -38,7 +38,7 @@ export const userApi = postsApi.injectEndpoints({
             }),
             invalidatesTags: ['Posts', 'User']
         }),
-        userLogin: builder.mutation({
+        userLogin: builder.mutation<IUserSliceType, IUserLogin>({
             query: ({ email, password }) => ({
                 url: Endpoints.login,
                 method: 'POST',
@@ -49,7 +49,7 @@ export const userApi = postsApi.injectEndpoints({
             }),
             invalidatesTags: ['Posts', 'User']
         }),
-        getMe: builder.query<any, void>({
+        getMe: builder.query<IUserSliceType | undefined, void>({
             query: () => ({
                 url: '/auth/me',
                 headers: {

@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Api, BaseUrl, Endpoints } from '../../consts/consts';
 import { IFullPost, IPostCard } from '../../Types';
+import { ISendMessageType } from '../../Types/SendMessageType';
+import { ICreatePostParam } from '../../Types/CreatePostType';
 
 
 const useAuthToken = () => {
@@ -39,7 +41,7 @@ export const postsApi = createApi({
             }),
             providesTags: ['CurrentPost'],
         }),
-        sendComment: builder.mutation<any, any>({
+        sendComment: builder.mutation<IPostCard, ISendMessageType>({
             query: ({ postId, comment, user }) => ({
                 url: `/comment/post/${postId}`,
                 method: 'PATCH',
@@ -53,8 +55,8 @@ export const postsApi = createApi({
             }),
             invalidatesTags: ['CurrentPost'],
         }),
-        deletePost: builder.mutation({
-            query: (id: string) => ({
+        deletePost: builder.mutation<void, string>({
+            query: (id) => ({
                 url: `/post/${id}`,
                 method: 'DELETE',
                 headers: {
@@ -63,10 +65,21 @@ export const postsApi = createApi({
             }),
             invalidatesTags: ['Posts'],
         }),
-        createPost: builder.mutation({
+        createPost: builder.mutation<void, ICreatePostParam>({
             query: (body) => ({
                 url: Endpoints.posts,
                 method: 'POST',
+                body,
+                headers: {
+                    Authorization: useAuthToken()
+                }
+            }),
+            invalidatesTags: ['Posts'],
+        }),
+        updatePost: builder.mutation<IPostCard, ICreatePostParam | undefined>({
+            query: (body) => ({
+                url: `${Endpoints.currentPost}${body?.id}`,
+                method: 'PATCH',
                 body,
                 headers: {
                     Authorization: useAuthToken()
@@ -85,5 +98,7 @@ export const {
     useLazyGetSearchedPostsQuery,
     useDeletePostMutation,
     useLazyGetCurrentPostQuery,
-    useSendCommentMutation
+    useSendCommentMutation,
+    useUpdatePostMutation,
+    useGetCurrentPostQuery
 } = postsApi 

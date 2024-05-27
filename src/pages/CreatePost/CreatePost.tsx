@@ -1,13 +1,18 @@
 import React from 'react';
 import axios from '../../axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Row, Col, Card, Button, Input, Image } from 'antd';
+import { Row, Col, Card, Button, Input, Image, Select } from 'antd';
 import SimpleMDE from 'react-simplemde-editor';
 import styles from './CreatePost.module.scss';
 import 'easymde/dist/easymde.min.css';
 import PageTransition from '../../components/PageTransition/PageTransition';
 import { MemoizedMyHeader } from '../../components/Header/MyHeader';
-import { postsApi } from '../../store/Api/PostApi';
+import { postsApi, useGetCurrentPostQuery } from '../../store/Api/PostApi';
+import type { SelectProps } from 'antd';
+
+
+
+
 
 const CreatePost: React.FC = () => {
     const { id } = useParams()
@@ -20,23 +25,32 @@ const CreatePost: React.FC = () => {
     const [tags, setTags] = React.useState<Array<string>>([])
     const inputFileRef = React.useRef<HTMLInputElement>(null)
 
+    const [createPost] = postsApi.useCreatePostMutation()
+    const [updatePost] = postsApi.useUpdatePostMutation()
+    const [getCurrentPosts] = postsApi.useLazyGetCurrentPostQuery()
+    const [selectValue, setSelectValue] = React.useState()
+
     React.useEffect(() => {
         setTimeout(() => {
             if (id) {
-                axios.get(`post/${id}`).then(({ data }) => {
-                    setTitle(data.title);
-                    setText(data.text);
+                getCurrentPosts(id).then(({ data }) => {
+                    setTitle(data?.title);
+                    setText(data?.text);
                     setTags(data.tags.join(','));
-                    setImageUrl(data.imageUrl);
-                }).catch((error) => {
-                    alert(error)
+                    setImageUrl(data?.imageUrl);
                 })
             }
         }, 1000)
     }, [])
 
+    const optionsSelect: SelectProps['options'] = [{ value: 'React', label: 'React' }];
 
-
+    for (let i = 34; i < 36; i++) {
+        optionsSelect.push({
+            value: i.toString(36) + i,
+            label: i.toString(36) + i,
+        });
+    }
 
     const options = React.useMemo(
         () => ({
@@ -61,8 +75,11 @@ const CreatePost: React.FC = () => {
         setText(text);
     }, []);
 
+    const handleChange = (value: string) => {
+        console.log(optionsSelect)
+    };
 
-
+    console.log(optionsSelect)
 
     const handleChangeFile = async (event: any) => {
         try {
@@ -80,18 +97,17 @@ const CreatePost: React.FC = () => {
         setImageUrl('')
     }
 
-    const [createPost] = postsApi.useCreatePostMutation()
 
     const onSubmit = async () => {
-        // try {
         const fields = {
+            id,
             title,
             text,
             imageUrl,
-            tags,
+            tags: tags,
         }
         navigate(`/`)
-        createPost(fields)
+        id ? updatePost(fields) : createPost(fields)
     }
 
 
@@ -108,7 +124,8 @@ const CreatePost: React.FC = () => {
                             <Button
                                 onClick={() => inputFileRef.current && inputFileRef.current.click()}
                                 style={{ borderRadius: 0 }}
-                            >Загрузить превью</Button>
+                            >Загрузить превью
+                            </Button>
                             {
                                 imageUrl ? (
                                     <Button
@@ -137,6 +154,14 @@ const CreatePost: React.FC = () => {
                                 style={{ border: 0, borderRadius: 0, borderBottom: "1px solid gray" }}
                                 onChange={handleAddTags}
                                 value={tags}
+                            />
+                            <Select
+                                mode="tags"
+                                style={{ width: '100%' }}
+                                placeholder="Tags Mode"
+                                onChange={handleChange}
+                                options={optionsSelect}
+                                tokenSeparators={[',']}
                             />
                             <br />
                             <br />
