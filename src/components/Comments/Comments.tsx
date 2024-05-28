@@ -9,7 +9,6 @@ import { CommentsProps } from '../../Types';
 const Comments: React.FC<CommentsProps> = ({ style, comment, user }) => {
     const { Text } = Typography;
 
-    console.log(user)
 
     const data = [
         {

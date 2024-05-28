@@ -9,26 +9,30 @@ import { useAppDispatch } from '../../store/Hooks/useDispatch';
 
 
 
-export interface IPostlistProps {
-    isPostsLoading: boolean,
-    isPopular: boolean,
-}
 
 
-const PostsList: React.FC<IPostlistProps> = ({ isPopular }) => {
 
+const PostsList: React.FC = () => {
+
+    const isPopular = useAppSelector((state) => state.FILTER.isPopular)
+    const searchedValue = useAppSelector((state) => state.SEARCH.search)
     const dispatch = useAppDispatch()
+
     const { data: user } = userApi.useGetMeQuery()
     const { data: posts, isLoading } = postsApi.useGetAllPostsQuery()
-    const { data: popularPosts, isLoading: isPopularLoading } = postsApi.useGetPopularPostsQuery()
-    const searchedValue = useAppSelector((state) => state.SEARCH.search)
-    const { data: searchedPosts } = postsApi.useGetSearchedPostsQuery(searchedValue)
+    const { data: popularPosts, error } = postsApi.useGetPopularPostsQuery()
 
-    // if(searchedValue === ''){
-    //     dispatch(postsApi.util.resetApiState())
-    // }
+    const [getSearchedPosts, {data: searchedPosts}]= postsApi.useLazyGetSearchedPostsQuery()
+
+    console.log(isPopular)
+
+    React.useEffect(() => {
+        // dispatch(postsApi.util.resetApiState())
+        getSearchedPosts(searchedValue)
+    }, [searchedValue])
 
     console.log(searchedPosts)
+    console.log(popularPosts, error)
 
     return (
         <Col span={8} offset={6}>
@@ -51,7 +55,7 @@ const PostsList: React.FC<IPostlistProps> = ({ isPopular }) => {
             }
 
             {
-                isPopular && !isPopularLoading && popularPosts?.map((el, i) => (
+                isPopular && popularPosts?.map((el, i) => (
                     <PostCard
                         key={i}
                         style={{ marginTop: 10, marginBottom: 10 }}

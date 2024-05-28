@@ -3,10 +3,12 @@ import { searchReducer } from "./slices/searchValue";
 import { NameSpace } from "../consts/consts";
 import { postsApi } from "./Api/PostApi";
 import { userApi } from "./Api/UserApi";
+import { filterBarReducer } from "./slices/filterBarSlice";
 
 
 const rootReducer = combineReducers({
     [NameSpace.Search]:searchReducer,
+    [NameSpace.filterBar]: filterBarReducer,
     [postsApi.reducerPath]: postsApi.reducer,
 })
 

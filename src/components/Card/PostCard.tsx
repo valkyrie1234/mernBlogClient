@@ -19,7 +19,7 @@ const PostCard: React.FC<IPostCard> = ({ style, _id, imageUrl, createdAt, title,
             deletePostTest(_id)
         }
     }
-    console.log(error)
+    
     return (
         <Row style={style}>
             <Col span={22}>

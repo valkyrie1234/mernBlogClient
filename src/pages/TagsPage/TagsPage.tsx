@@ -15,7 +15,6 @@ export const TagsPage: React.FC = () => {
 
     const { data } = tagsApi.useGetPostsByTagsQuery(tag?.trim())
 
-    console.log(data)
 
     return (
         <div>

@@ -17,7 +17,6 @@ const MyHeader: React.FC = () => {
 
     const { data: userData } = userApi.useGetMeQuery()
 
-    console.log(userData)
 
     const onClicklogout = (): void => {
         if (window.confirm('are you sure?')) {
@@ -26,7 +25,7 @@ const MyHeader: React.FC = () => {
         }
     }
 
-    // console.log(data)
+
 
     return (
         <Row align={'middle'} style={{ height: 70, background: '#222222' }}>

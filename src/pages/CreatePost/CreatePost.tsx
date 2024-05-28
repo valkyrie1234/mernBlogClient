@@ -76,10 +76,9 @@ const CreatePost: React.FC = () => {
     }, []);
 
     const handleChange = (value: string) => {
-        console.log(optionsSelect)
     };
 
-    console.log(optionsSelect)
+
 
     const handleChangeFile = async (event: any) => {
         try {
@@ -89,7 +88,7 @@ const CreatePost: React.FC = () => {
             const { data } = await axios.post('/upload', formData);
             setImageUrl(data.url)
         } catch (error) {
-            console.log(error)
+            
         }
     }
 

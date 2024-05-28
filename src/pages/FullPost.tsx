@@ -33,12 +33,7 @@ const FullPost: React.FC = () => {
         setShowModal(prev => !prev)
     }
 
-    console.log(id)
-    console.log(currentPost)
-
-
     if (!currentPost || isLoading) {
-        console.log('skelet')
         return <FullPostSkeleton />
     }
 

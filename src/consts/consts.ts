@@ -2,8 +2,7 @@
 
 export const NameSpace = {
     Search: "SEARCH",
-    User: "USER",
-    Loaders: "LOADERS"
+    filterBar: "FILTER"
 } as const
 
 

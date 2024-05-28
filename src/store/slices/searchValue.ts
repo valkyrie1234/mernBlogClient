@@ -6,9 +6,8 @@ import { NameSpace } from "../../consts/consts";
 
 
 export interface IInitialState {
-    search: string
+    search: string 
 }
-
 const initialState: IInitialState = {
     search: ''
 }

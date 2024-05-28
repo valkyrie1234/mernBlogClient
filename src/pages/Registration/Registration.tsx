@@ -21,7 +21,6 @@ const Registartion: React.FC = () => {
     const onFinish: FormProps<IUserReg>['onFinish'] = (values: IUserReg) => {
         registartion(values).then((res) => {
             window.localStorage.setItem('token', res.data.token)
-            console.log(res)
         }).catch((err) => console.log(err))
     };
 

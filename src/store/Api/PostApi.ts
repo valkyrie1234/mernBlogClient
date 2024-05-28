@@ -5,6 +5,7 @@ import { ISendMessageType } from '../../Types/SendMessageType';
 import { ICreatePostParam } from '../../Types/CreatePostType';
 
 
+
 const useAuthToken = () => {
     const token = localStorage.getItem("token");
     return token ? `Bearer ${token}` : undefined;
@@ -33,7 +34,6 @@ export const postsApi = createApi({
             query: (title) => ({
                 url: `${Endpoints.serachedPosts}${title}`
             }),
-            providesTags: ['Posts'],
         }),
         getCurrentPost: builder.query<IFullPost, string | undefined>({
             query: (id) => ({
@@ -100,5 +100,6 @@ export const {
     useLazyGetCurrentPostQuery,
     useSendCommentMutation,
     useUpdatePostMutation,
-    useGetCurrentPostQuery
+    useGetCurrentPostQuery,
+    useGetPopularPostsQuery
 } = postsApi 

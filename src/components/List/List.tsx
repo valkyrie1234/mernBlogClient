@@ -13,7 +13,6 @@ export interface ISearchedPostList {
 const List: React.FC<ISearchedPostList> = ({ isPostsLoading }) => {
 
 
-    console.log(111)
 
 
     return (

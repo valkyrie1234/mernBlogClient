@@ -23,7 +23,8 @@ const ProfilePage: React.FC = () => {
 
     const { id } = useParams()
     const [updateUserData] = userApi.useUpdateUserDataMutation()
-    console.log(id)
+
+
 
     const data = {
         _id: id,
@@ -44,7 +45,7 @@ const ProfilePage: React.FC = () => {
             setNewAvatarUrl(data.url);
 
         } catch (error) {
-            console.log(error)
+
         }
     }
 

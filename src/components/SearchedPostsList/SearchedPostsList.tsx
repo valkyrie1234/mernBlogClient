@@ -19,7 +19,7 @@ const SearchedPostsList: React.FC<ISearchedPostList> = ({ isPopular }) => {
     const {data:user} = userApi.useGetMeQuery()
     // const { data: posts, error } = postsApi.useGetAllPostsQuery()
     const { data: posts, error } = postsApi.useGetAllPostsQuery()
-    // console.log(posts, error)
+
     return (
         <Col>
             {
