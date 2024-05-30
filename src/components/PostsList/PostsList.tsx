@@ -4,7 +4,7 @@ import { postsApi } from '../../store/Api/PostApi';
 import PostCard from '../Card/PostCard';
 import { userApi } from '../../store/Api/UserApi';
 import { useAppSelector } from '../../store/Hooks/useSelector';
-import { useAppDispatch } from '../../store/Hooks/useDispatch';
+
 
 
 
@@ -16,7 +16,7 @@ const PostsList: React.FC = () => {
 
     const isPopular = useAppSelector((state) => state.FILTER.isPopular)
     const searchedValue = useAppSelector((state) => state.SEARCH.search)
-    const dispatch = useAppDispatch()
+
 
     const { data: user } = userApi.useGetMeQuery()
     const { data: posts, isLoading } = postsApi.useGetAllPostsQuery()
