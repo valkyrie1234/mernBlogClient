@@ -21,8 +21,7 @@ const FullPostSkeleton: React.FC = () => {
                         <Meta
                             title={<Skeleton.Button active style={{ width: 300 }} />}
                             description={<Skeleton.Button size='small' active style={{ width: 300 }} />}
-                        >
-                        </Meta>
+                        />
                         <Skeleton active style={{ marginTop: 20 }} />
                         <Divider />
                         <Skeleton.Button size='small' active />
@@ -32,8 +31,8 @@ const FullPostSkeleton: React.FC = () => {
                         <Image.PreviewGroup>
                             <Row gutter={[8, 10]} style={{ marginTop: 20 }}>
                                 {
-                                    [...Array(7)].map((_) => (
-                                        <Col span={4}>
+                                    [...Array(7)].map((_, i) => (
+                                        <Col span={4} key={i}>
                                             <Skeleton.Image active />
                                         </Col>
                                     ))

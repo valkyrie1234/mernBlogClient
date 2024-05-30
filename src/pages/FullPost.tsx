@@ -1,15 +1,15 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
-import { Row, Col, Card, Typography, Image, Divider, Badge, Avatar, Button } from 'antd';
+import { Row, Col, Card, Typography, Image, Divider, Badge, Avatar } from 'antd';
 import Markdown from 'react-markdown';
 import { MessageOutlined } from '@ant-design/icons'
 import Comments from '../components/Comments/Comments';
 import FullPostSkeleton from './FullPostSkeleton';
 import blueFon from '../assets/blue_fon.jpg';
-import ModalMessage from '../components/ModalMessage/ModalMessage';
 import { MemoizedMyHeader } from '../components/Header/MyHeader';
 import { postsApi } from '../store/Api/PostApi';
 import { userApi } from '../store/Api/UserApi';
+import MessageForm from '../components/MessageForm/MessageForm';
 
 
 
@@ -20,28 +20,23 @@ const { Title, Text } = Typography;
 
 const FullPost: React.FC = () => {
 
-    const [showModal, setShowModal] = React.useState<boolean>(false)
-
-
-    const {data: isAuth} = userApi.useGetMeQuery()
+    const { data: isAuth } = userApi.useGetMeQuery()
     const [showComment, setShowComment] = React.useState<boolean>(false)
 
     const { id } = useParams();
     const { data: currentPost, isLoading } = postsApi.useGetCurrentPostQuery(id)
 
-    const changeVisibleMiodal = () => {
-        setShowModal(prev => !prev)
-    }
 
     if (!currentPost || isLoading) {
         return <FullPostSkeleton />
     }
 
-
     const showCommentHandler = (): void => {
         setShowComment((prev) => !prev)
     }
 
+
+    console.log(showComment)
     return (
         <div>
             <MemoizedMyHeader />
@@ -81,25 +76,31 @@ const FullPost: React.FC = () => {
                         <Col span={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
                             <Badge style={{ marginTop: 17, marginRight: 3 }} count={!currentPost?.postComment?.length ? 0 : currentPost?.postComment?.length}>
-
-                                <Avatar style={{ marginTop: 10 }} onClick={showCommentHandler} size={44} alt='Всего комментариев' icon={<MessageOutlined />} />
-
+                                <Avatar style={{ marginTop: 10 }} onClick={showCommentHandler} alt='Всего комментариев' size={44} icon={<MessageOutlined />} />
                             </Badge>
-
-                            {isAuth ? (<Button type='link' onClick={() => changeVisibleMiodal()}> send comment </Button>) : ''}
-                            {showModal ? <ModalMessage postId={ id }  /> : ''}
                         </Col>
 
-                    </Card>
-                    <Divider />
-                    {
-                        !showComment ?
-                            ''
-                            :
+                        <br />
+                        <br />
+                        {
+                            !showComment &&  currentPost?.postComment ? 
                             currentPost?.postComment?.map((el) => (
-                                <Comments key={el._id} style={{ marginTop: 10 }} user={el.user} comment={el.comment} />
-                            ))
-                    }
+                                <Comments key={el._id} style={{ marginTop: 10, borderRadius: 0, border: '0px', borderTop: '1px solid gray' }} user={el.user} comment={el.comment} />
+                            )).slice(0, 1)
+                            : ''
+                        }
+                        {
+                            !showComment ?
+                                ''
+                                :
+                                currentPost?.postComment?.map((el) => (
+                                    <Comments key={el._id} style={{ marginTop: 10, borderRadius: 0, border: '0px', borderTop: '1px solid gray' }} user={el.user} comment={el.comment} />
+                                ))
+                        }
+                        {
+                            isAuth && <MessageForm  /> 
+                        }
+                    </Card>
                 </Col>
             </Row>
         </div>

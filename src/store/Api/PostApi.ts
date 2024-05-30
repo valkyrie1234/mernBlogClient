@@ -53,7 +53,7 @@ export const postsApi = createApi({
                     Authorization: useAuthToken()
                 }
             }),
-            invalidatesTags: ['CurrentPost'],
+            invalidatesTags: ['CurrentPost', 'Posts'],
         }),
         deletePost: builder.mutation<void, string>({
             query: (id) => ({

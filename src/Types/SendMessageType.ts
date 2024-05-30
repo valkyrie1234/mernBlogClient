@@ -1,5 +1,5 @@
 export interface ISendMessageType {
     postId?: string , 
-    user: string,
+    user?: string,
     comment:string,
 }

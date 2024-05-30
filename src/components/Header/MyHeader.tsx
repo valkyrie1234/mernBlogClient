@@ -39,8 +39,8 @@ const MyHeader: React.FC = () => {
                                 <Avatar size={48} icon={<Link to={Paths.Main}><AlertOutlined /></Link>} />
                             </Col>
                             <Col span={12} style={{ display: 'flex', justifyContent: 'end', gap: '12px' }}>
-                                <Button style={{ borderRadius: '0px' }} type='primary'><Link to={Paths.Registration}>Зарегистрироваться</Link></Button>
-                                <Button style={{ borderRadius: '0px' }} type='primary'><Link to={Paths.Login}>Войти</Link></Button>
+                                <Link to={Paths.Registration}><Button style={{ borderRadius: '0px' }} type='primary'>Зарегистрироваться</Button> </Link>
+                                <Link to={Paths.Login}><Button style={{ borderRadius: '0px' }} type='primary'>Войти</Button></Link>
                             </Col>
                         </Row>)
                         :
