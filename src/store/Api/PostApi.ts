@@ -39,7 +39,7 @@ export const postsApi = createApi({
             query: (id) => ({
                 url: `${Endpoints.currentPost}${id}`
             }),
-            providesTags: ['CurrentPost'],
+            providesTags: ['CurrentPost', 'Posts'],
         }),
         sendComment: builder.mutation<IPostCard, ISendMessageType>({
             query: ({ postId, comment, user }) => ({

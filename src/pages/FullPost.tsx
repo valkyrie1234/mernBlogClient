@@ -8,7 +8,6 @@ import FullPostCard from '../components/FullPostCard/FullPostCard';
 
 
 const FullPost: React.FC = () => {
-
     return (
         <>
             <MemoizedMyHeader />

@@ -4,11 +4,13 @@ import { NameSpace } from "../consts/consts";
 import { postsApi } from "./Api/PostApi";
 import { userApi } from "./Api/UserApi";
 import { filterBarReducer } from "./slices/filterBarSlice";
+import { showCommentReducer } from "./slices/showCommentBtn";
 
 
 const rootReducer = combineReducers({
     [NameSpace.Search]:searchReducer,
     [NameSpace.filterBar]: filterBarReducer,
+    [NameSpace.showComments]: showCommentReducer,
     [postsApi.reducerPath]: postsApi.reducer,
 })
 

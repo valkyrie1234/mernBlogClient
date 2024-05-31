@@ -5,6 +5,7 @@ import { EyeFilled, CommentOutlined, DeleteOutlined, EditOutlined, ArrowRightOut
 import { IPostCard } from './../../Types/index';
 import blueFon from '../../assets/blue_fon.jpg'
 import { postsApi } from '../../store/Api/PostApi';
+import { format } from 'date-fns';
 
 const { Meta } = Card;
 const { Title } = Typography
@@ -33,10 +34,11 @@ const PostCard: React.FC<IPostCard> = ({ style, _id, imageUrl, createdAt, title,
                             <Button onClick={() => removePost()} style={{ borderRadius: 0 }} danger><DeleteOutlined />delete</Button>
                         </Col>
                     }
+                    {/* вынести в отдельный компонент */}
                     <Meta
                         avatar={<Avatar size={64} src={`http://localhost:4444${user?.avatarUrl}`} />}
                         title={user.fullName}
-                        description={"Пост создан:" + ' ' + createdAt.toString().slice(0, 10)}
+                        description={"Пост создан:" + ' ' + format(createdAt, 'MM-dd-yyyy')}
                     />
                     <Col span={24} style={{ padding: 10 }}>
                         <Title level={2}>
