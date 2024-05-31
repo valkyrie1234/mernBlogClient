@@ -1,10 +1,10 @@
 export interface IPostCard {
     editable?: boolean,
     _id: string, 
-    title: string, 
-    viewsCount: number,
+    title?: string, 
+    viewsCount?: number,
     createdAt: Date,
-    tags: Array<string>,
+    tags?: Array<string>,
     imageUrl?: string,
     style?: Object,
     postImage?: Array<string>

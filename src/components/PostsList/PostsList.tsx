@@ -37,54 +37,42 @@ const PostsList: React.FC = () => {
     return (
         <Col span={8} offset={6}>
             {
-                searchedPosts === undefined && !isLoading && !isPopular && posts?.map((el, i) => (
+                searchedPosts === undefined && !isLoading && !isPopular && posts?.map((el) => (
                     <PostCard
-                        key={i}
+                        key={el._id}
                         style={{ marginTop: 10, marginBottom: 10 }}
                         _id={el._id}
-                        title={el.title}
                         imageUrl={el.imageUrl}
-                        viewsCount={el.viewsCount}
                         createdAt={el.createdAt}
-                        tags={el.tags}
                         user={el?.user}
                         editable={user?._id === el.user._id}
-                        postComment={el.postComment}
                     />
                 ))
             }
 
             {
-                isPopular && popularPosts?.map((el, i) => (
+                isPopular && popularPosts?.map((el) => (
                     <PostCard
-                        key={i}
+                        key={el._id}
                         style={{ marginTop: 10, marginBottom: 10 }}
                         _id={el._id}
-                        title={el.title}
                         imageUrl={el.imageUrl}
-                        viewsCount={el.viewsCount}
                         createdAt={el.createdAt}
-                        tags={el.tags}
                         user={el?.user}
                         editable={user?._id === el.user._id}
-                        postComment={el.postComment}
                     />
                 ))
             }
             {
-                searchedPosts?.map((el, i) => (
+                searchedPosts?.map((el) => (
                     <PostCard
-                        key={i}
+                        key={el._id}
                         style={{ marginTop: 10, marginBottom: 10 }}
                         _id={el._id}
-                        title={el.title}
                         imageUrl={el.imageUrl}
-                        viewsCount={el.viewsCount}
                         createdAt={el.createdAt}
-                        tags={el.tags}
                         user={el?.user}
                         editable={user?._id === el.user._id}
-                        postComment={el.postComment}
                     />
                 ))
             }
