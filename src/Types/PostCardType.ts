@@ -7,7 +7,8 @@ export interface IPostCard {
     tags?: Array<string>,
     imageUrl?: string,
     style?: Object,
-    postImage?: Array<string>
+    postImage?: Array<string>,
+    text? : string,
     user: {
         _id?: string,
         fullName: string,

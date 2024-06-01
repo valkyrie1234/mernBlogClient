@@ -39,7 +39,7 @@ const MyHeader: React.FC = () => {
                                 <Avatar size={48} icon={<Link to={Paths.Main}><AlertOutlined /></Link>} />
                             </Col>
                             <Col span={12} style={{ display: 'flex', justifyContent: 'end', gap: '12px' }}>
-                                <Link to={Paths.Registration}><Button style={{ borderRadius: '0px' }} type='primary'>Зарегистрироваться</Button> </Link>
+                                <Link to={Paths.Registration}><Button style={{ borderRadius: '0px' }} type='primary'>Зарегистрироваться</Button></Link>
                                 <Link to={Paths.Login}><Button style={{ borderRadius: '0px' }} type='primary'>Войти</Button></Link>
                             </Col>
                         </Row>)
@@ -57,8 +57,8 @@ const MyHeader: React.FC = () => {
                                     <Link style={{ color: 'white' }} to={`/profile/${userData?._id}`}>{userData?.email}</Link>
                                     <p>{userData?.fullName}</p>
                                 </div>
-                                <Button style={{ borderRadius: '0px' }} type='primary'><Link to={Paths.CreatePost}>Создать пост</Link></Button>
-                                <Button danger style={{ borderRadius: '0px' }} onClick={() => onClicklogout()} type='primary'><Link to={Paths.Main}>Выйти</Link></Button>
+                                <Link to={Paths.CreatePost}><Button style={{ borderRadius: '0px' }} type='primary'>Создать пост</Button></Link>
+                                <Link to={Paths.Main}><Button danger style={{ borderRadius: '0px' }} onClick={() => onClicklogout()} type='primary'>Выйти</Button></Link>
                             </Col>
                         </Row>)
                 }

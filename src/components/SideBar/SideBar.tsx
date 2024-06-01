@@ -10,7 +10,7 @@ const { Title } = Typography
 
 
 
-const SideBar: React.FC<SideBarProps> = React.memo(({ style, isPostsLoading}) => {
+const SideBar: React.FC<SideBarProps> = ({ style, isPostsLoading}) => {
 
     const { data: tags } = tagsApi.useGetAlltagsQuery()
 
@@ -39,6 +39,6 @@ const SideBar: React.FC<SideBarProps> = React.memo(({ style, isPostsLoading}) =>
             }
         </>
     );
-})
+}
 
 export default SideBar;
